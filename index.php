@@ -382,7 +382,6 @@ foreach ($files as $file) {
               }
             }
             arsort($tds_by_opp['opp']);
-            array_multisort(array_map('count', $tds_by_opp['team'][$t]), SORT_DESC, $tds_by_opp['team'][$t]);
           }
           ?>
             <div id="td-by-opp"></div>
@@ -434,7 +433,7 @@ foreach ($files as $file) {
                         {
                             name: '<?php print $qb_last_name; ?> TDs (<?php print $team?>)',
                             data: [
-                              <?php foreach($team_tds as $team => $opp_tds): ?>
+                              <?php foreach($tds_by_opp['opp'] as $team => $opp_tds): ?>
                               <?php if (isset($team_tds[$team])) {
                               print count($team_tds[$team]);
                             }
