@@ -57,7 +57,8 @@ function qb_colors($qb) {
     'philip-rivers' => ['#0080C6', '#002C5F'],
     'eli-manning' => ['#0B2265', '#A71930'],
     'aaron-rodgers' => ['#203731', '#FFB612'],
-    'matt-ryan' => ['#A71930', '#002C5F']
+    'matt-ryan' => ['#A71930', '#002C5F'],
+    'matt-stafford' => ['#0076B6', '#003594'],
   ];
   return $colors[$qb];
 }
@@ -77,7 +78,8 @@ function qb_seasons($qb) {
     'philip-rivers' => 15,
     'eli-manning' => 16,
     'aaron-rodgers' => 16,
-    'matt-ryan' => 14
+    'matt-ryan' => 14,
+    'matt-stafford' => 12,
   ];
   return $seasons[$qb];
 }
