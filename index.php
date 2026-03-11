@@ -420,7 +420,7 @@ foreach ($tds as $team => $team_tds) {
                         enabled: false
                     },
                   <?php if (isset($qb_last_name)): ?>
-                  <?php if ($qb_last_name == 'Favre'): ?>
+                  <?php if ($qb_last_name == 'Favre' || $qb_path == 'aaron-rodgers'): ?>
                     colors: ['<?php print $qb_colors[0];?>', '<?php print $qb_colors[1];?>', '<?php print $qb_colors[2];?>'],
                   <?php else: ?>
                     colors: ['<?php print $qb_colors[0];?>', '<?php print $qb_colors[1];?>'],
@@ -558,7 +558,7 @@ foreach ($tds as $team => $team_tds) {
                                 }?>
                                 ],
                                 zoneAxis: 'x',
-                              <?php if ($qb_last_name == 'Favre'): ?>
+                              <?php if ($qb_last_name == 'Favre' || $qb_path == 'aaron-rodgers'): ?>
                                 zones: [
                                     {
                                         value: <?php print qb_seasons($qb_path)?>,
@@ -963,7 +963,7 @@ foreach ($tds as $team => $team_tds) {
                         enabled: false
                     },
                   <?php if ($qb_path): ?>
-                      <?php if ($qb_last_name == 'Favre'): ?>
+                      <?php if ($qb_last_name == 'Favre' || $qb_path == 'aaron-rodgers'): ?>
                         colors: ['<?php print $qb_colors[0];?>', '<?php print $qb_colors[1];?>', '<?php print $qb_colors[2];?>'],
                       <?php else: ?>
                         colors: ['<?php print $qb_colors[0];?>', '<?php print $qb_colors[1];?>'],
