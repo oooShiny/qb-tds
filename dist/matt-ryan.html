@@ -880,8 +880,8 @@
     <h1 class="font-light text-3xl text-center">TDs by Week</h1>
       <div class="flex flex-wrap p-10">
                 <p class="pb-10">
-            Matt Ryan has thrown 21              playoff TDs which is
-              about 5.4              % of his total TDs.
+            Matt Ryan has thrown 20              playoff TDs which is
+              about 5.1              % of his total TDs.
           </p>
               <div class="w-screen">
 
@@ -916,6 +916,7 @@
                                                                                                                                       'Week 15',
                                                                                                                                       'Week 16',
                                                                                                                                       'Week 17',
+                                                                                                                                      'Week 18',
                                                                                                                                       'Wildcard',
                                                                                                                                       'Divisional',
                                                                                                                                       'Conference',
@@ -929,12 +930,12 @@
                         title: 'Ryan TDs',
                         plotLines: [{
                             color: 'gray',
-                            value: 19,
+                            value: 18,
                             width: '1',
                             zIndex: 4,
                             dashStyle: 'Dot',
                             label: {
-                                text: 'Average: 19',
+                                text: 'Average: 18',
                                 align: 'left',
                             }
                         }]
@@ -956,11 +957,11 @@
                                 symbol: 'circle'
                             },
                             data: [
-                              21,31,31,23,18,25,17,17,24,20,15,16,15,25,25,24,22,4,8,7,2,                            ],
+                              21,31,31,23,18,25,17,17,24,20,15,16,15,25,25,24,22,1,3,8,7,2,                            ],
                             zoneAxis: 'x',
                             zones: [
                                 {
-                                    value: 17,
+                                    value: 18,
                                     color: '#A71930'
                                 },
                                 {
@@ -1080,7 +1081,12 @@
                 Highcharts.chart('td-by-dist', {
                     chart: {
                         type: 'column',
-                        backgroundColor: '#fff'
+                        backgroundColor: '#fff',
+                        zoomType: 'x',
+                        scrollablePlotArea: {
+                            minWidth: 2500,
+                            scrollPositionX: 0
+                        }
                     },
                     legend: {
                         enabled: false
@@ -1192,7 +1198,7 @@
                                                       '99',
                                                   ],
                         title: {
-                            text: 'Distance'
+                            text: 'Distance (yards) — scroll to explore, drag to zoom'
                         }
                     },
                     yAxis: {

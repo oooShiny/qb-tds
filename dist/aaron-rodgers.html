@@ -1122,8 +1122,8 @@
     <h1 class="font-light text-3xl text-center">TDs by Week</h1>
       <div class="flex flex-wrap p-10">
                 <p class="pb-10">
-            Aaron Rodgers has thrown 33              playoff TDs which is
-              about 5.7              % of his total TDs.
+            Aaron Rodgers has thrown 48              playoff TDs which is
+              about 8.3              % of his total TDs.
           </p>
               <div class="w-screen">
 
@@ -1158,7 +1158,7 @@
                                                                                                                                       'Week 15',
                                                                                                                                       'Week 16',
                                                                                                                                       'Week 17',
-                                                                                                                                      '',
+                                                                                                                                      'Week 18',
                                                                                                                                       'Wildcard',
                                                                                                                                       'Divisional',
                                                                                                                                       'Conference',
@@ -1199,7 +1199,7 @@
                                 symbol: 'circle'
                             },
                             data: [
-                              32,35,34,36,29,32,40,27,33,23,35,24,32,24,23,34,27,23,18,9,3,3,                            ],
+                              32,35,34,36,29,32,40,27,33,23,35,24,32,24,23,34,27,8,15,18,9,6,                            ],
                             zoneAxis: 'x',
                             zones: [
                                 {
@@ -1323,7 +1323,12 @@
                 Highcharts.chart('td-by-dist', {
                     chart: {
                         type: 'column',
-                        backgroundColor: '#fff'
+                        backgroundColor: '#fff',
+                        zoomType: 'x',
+                        scrollablePlotArea: {
+                            minWidth: 2500,
+                            scrollPositionX: 0
+                        }
                     },
                     legend: {
                         enabled: false
@@ -1435,7 +1440,7 @@
                                                       '99',
                                                   ],
                         title: {
-                            text: 'Distance'
+                            text: 'Distance (yards) — scroll to explore, drag to zoom'
                         }
                     },
                     yAxis: {

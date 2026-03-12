@@ -415,7 +415,7 @@
                             zoneAxis: 'x',
                             zones: [
                                 {
-                                    value: 17,
+                                    value: 18,
                                     color: '#005F61'
                                 },
                                 {
@@ -535,7 +535,12 @@
                 Highcharts.chart('td-by-dist', {
                     chart: {
                         type: 'column',
-                        backgroundColor: '#fff'
+                        backgroundColor: '#fff',
+                        zoomType: 'x',
+                        scrollablePlotArea: {
+                            minWidth: 2500,
+                            scrollPositionX: 0
+                        }
                     },
                     legend: {
                         enabled: false
@@ -647,7 +652,7 @@
                                                       '99',
                                                   ],
                         title: {
-                            text: 'Distance'
+                            text: 'Distance (yards) — scroll to explore, drag to zoom'
                         }
                     },
                     yAxis: {

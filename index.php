@@ -603,7 +603,7 @@ foreach ($tds as $team => $team_tds) {
       $tds_by_week[$td['week']][] = $td;
     }
     $week_avg = count($json) / count($tds_by_week);
-    ksort($tds_by_week);
+    ksort($tds_by_week, SORT_NUMERIC);
   }
   else {
     foreach ($tds as $q => $qtds) {
@@ -612,28 +612,18 @@ foreach ($tds as $team => $team_tds) {
         $tds_by_week['week'][$td['week']][] = $td;
       }
     }
-    ksort($tds_by_week['week']);
+    ksort($tds_by_week['week'], SORT_NUMERIC);
     $week_avg = count($tds) / count($tds_by_week['week']);
   }
 
 
   $playoff_tds = 0;
-  if (array_key_exists(22, $tds_by_week)) {
-    $playoff_weeks = [
-      19 => 'Wildcard',
-      20 => 'Divisional',
-      21 => 'Conference',
-      22 => 'Super Bowl',
-    ];
-  }
-  else {
-    $playoff_weeks = [
-      18 => 'Wildcard',
-      19 => 'Divisional',
-      20 => 'Conference',
-      21 => 'Super Bowl',
-    ];
-  }
+  $playoff_weeks = [
+    19 => 'Wildcard',
+    20 => 'Divisional',
+    21 => 'Conference',
+    22 => 'Super Bowl',
+  ];
   foreach ($playoff_weeks as $w => $name) {
     if (isset($tds_by_week[$w])) {
       $playoff_tds += count($tds_by_week[$w]);
@@ -667,7 +657,7 @@ foreach ($tds as $team => $team_tds) {
                         categories: [
                           <?php if ($qb_path): ?>
                               <?php foreach($tds_by_week as $week => $week_td): ?>
-                                  <?php if ($week < 18): ?>
+                                  <?php if (!isset($playoff_weeks[$week])): ?>
                                     'Week <?php print $week; ?>',
                                   <?php else: ?>
                                     '<?php print $playoff_weeks[$week]; ?>',
@@ -675,7 +665,7 @@ foreach ($tds as $team => $team_tds) {
                               <?php endforeach; ?>
                           <?php else: ?>
                               <?php foreach($tds_by_week['week'] as $week => $week_td): ?>
-                                  <?php if ($week < 18): ?>
+                                  <?php if (!isset($playoff_weeks[$week])): ?>
                                     'Week <?php print $week; ?>',
                                   <?php else: ?>
                                     '<?php print $playoff_weeks[$week]; ?>',
@@ -957,7 +947,12 @@ foreach ($tds as $team => $team_tds) {
                 Highcharts.chart('td-by-dist', {
                     chart: {
                         type: 'column',
-                        backgroundColor: '#fff'
+                        backgroundColor: '#fff',
+                        zoomType: 'x',
+                        scrollablePlotArea: {
+                            minWidth: 2500,
+                            scrollPositionX: 0
+                        }
                     },
                     legend: {
                         enabled: false
@@ -979,7 +974,7 @@ foreach ($tds as $team => $team_tds) {
                           <?php endfor; ?>
                         ],
                         title: {
-                            text: 'Distance'
+                            text: 'Distance (yards) — scroll to explore, drag to zoom'
                         }
                     },
                     yAxis: {

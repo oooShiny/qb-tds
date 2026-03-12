@@ -5381,12 +5381,11 @@
                                                                                                                                       'Week 15',
                                                                                                                                       'Week 16',
                                                                                                                                       'Week 17',
+                                                                                                                                      'Week 18',
                                                                                                                                       'Wildcard',
                                                                                                                                       'Divisional',
                                                                                                                                       'Conference',
                                                                                                                                       'Super Bowl',
-                                                                                                                                      '',
-                                                                                                                                      '',
                                                                                                                   ],
                         title: {
                             text: 'Week'
@@ -5396,12 +5395,12 @@
                         title: ' TDs',
                         plotLines: [{
                             color: 'gray',
-                            value: 0,
+                            value: 1,
                             width: '1',
                             zIndex: 4,
                             dashStyle: 'Dot',
                             label: {
-                                text: 'Average: 0',
+                                text: 'Average: 1',
                                 align: 'left',
                             }
                         }]
@@ -5423,12 +5422,12 @@
                                                                                             {
                             name: 'aaron-rodgers',
                             data: [
-                              32,32,35,36,29,32,40,33,35,24,24,23,34,27,34,27,23,23,18,3,9,3,                            ]
+                              32,32,35,36,29,32,40,33,35,24,24,23,34,27,34,27,23,8,15,18,6,9,                            ]
                         },
                                                                                                                                           {
                             name: 'ben-roethlisberger',
                             data: [
-                              25,21,18,28,18,27,35,26,34,22,27,27,25,16,24,29,17,15,11,6,3,                            ]
+                              25,21,18,28,18,27,35,26,34,22,27,27,25,16,24,29,17,1,11,6,14,3,                            ]
                         },
                                                                                             {
                             name: 'brett-favre',
@@ -5453,12 +5452,12 @@
                                                                                             {
                             name: 'matt-ryan',
                             data: [
-                              21,31,18,25,17,24,20,15,25,24,22,31,17,15,25,23,16,4,8,7,2,                            ]
+                              21,31,18,25,17,24,20,15,25,24,22,31,17,15,25,23,16,1,3,8,7,2,                            ]
                         },
                                                                                             {
                             name: 'matt-stafford',
                             data: [
-                              29,23,20,20,25,25,28,28,32,28,20,27,26,22,19,13,30,11,9,4,5,3,                            ]
+                              29,23,20,20,25,25,28,28,32,28,20,27,26,22,19,13,30,13,7,4,5,3,                            ]
                         },
                                                                                             {
                             name: 'peyton-manning',
@@ -5473,7 +5472,7 @@
                                                                                             {
                             name: 'tom-brady',
                             data: [
-                              39,40,40,44,32,30,40,29,38,46,38,36,32,39,38,36,30,12,22,32,20,                            ]
+                              39,40,40,44,32,30,40,29,38,46,38,36,32,39,38,36,30,3,22,32,20,9,                            ]
                         },
                                                                                       ]
                 });
@@ -5582,7 +5581,12 @@
                 Highcharts.chart('td-by-dist', {
                     chart: {
                         type: 'column',
-                        backgroundColor: '#fff'
+                        backgroundColor: '#fff',
+                        zoomType: 'x',
+                        scrollablePlotArea: {
+                            minWidth: 2500,
+                            scrollPositionX: 0
+                        }
                     },
                     legend: {
                         enabled: false
@@ -5693,7 +5697,7 @@
                                                       '99',
                                                   ],
                         title: {
-                            text: 'Distance'
+                            text: 'Distance (yards) — scroll to explore, drag to zoom'
                         }
                     },
                     yAxis: {

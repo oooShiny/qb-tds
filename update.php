@@ -183,6 +183,16 @@ function date_to_season_week(string $date): array {
     $days      = (int) (($ts - $opener_ts) / 86400);
     $week      = (int) floor($days / 7) + 1;
 
+    // Normalize to the unified 19-22 playoff scheme.
+    // Before 2021 (16-game season): cap raw week at 21, then shift playoffs by +1.
+    // 2021+ (17-game season): cap raw week at 22; playoffs already land at 19-22.
+    if ($season < 2021) {
+        $week = min($week, 21);
+        if ($week >= 18) $week += 1;   // WC 18→19, Div 19→20, Conf 20→21, SB 21→22
+    } else {
+        $week = min($week, 22);
+    }
+
     return [$season, $week];
 }
 

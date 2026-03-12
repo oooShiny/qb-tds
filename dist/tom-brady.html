@@ -1202,8 +1202,8 @@
     <h1 class="font-light text-3xl text-center">TDs by Week</h1>
       <div class="flex flex-wrap p-10">
                 <p class="pb-10">
-            Tom Brady has thrown 86              playoff TDs which is
-              about 12.1              % of his total TDs.
+            Tom Brady has thrown 83              playoff TDs which is
+              about 11.6              % of his total TDs.
           </p>
               <div class="w-screen">
 
@@ -1238,6 +1238,7 @@
                                                                                                                                       'Week 15',
                                                                                                                                       'Week 16',
                                                                                                                                       'Week 17',
+                                                                                                                                      'Week 18',
                                                                                                                                       'Wildcard',
                                                                                                                                       'Divisional',
                                                                                                                                       'Conference',
@@ -1251,12 +1252,12 @@
                         title: 'Brady TDs',
                         plotLines: [{
                             color: 'gray',
-                            value: 34,
+                            value: 32,
                             width: '1',
                             zIndex: 4,
                             dashStyle: 'Dot',
                             label: {
-                                text: 'Average: 34',
+                                text: 'Average: 32',
                                 align: 'left',
                             }
                         }]
@@ -1278,11 +1279,11 @@
                                 symbol: 'circle'
                             },
                             data: [
-                              46,38,36,32,39,40,40,44,32,30,40,39,30,38,29,36,38,12,32,22,20,                            ],
+                              46,38,36,32,39,40,40,44,32,30,40,39,30,38,29,36,38,3,9,32,22,20,                            ],
                             zoneAxis: 'x',
                             zones: [
                                 {
-                                    value: 17,
+                                    value: 18,
                                     color: '#002244'
                                 },
                                 {
@@ -1402,7 +1403,12 @@
                 Highcharts.chart('td-by-dist', {
                     chart: {
                         type: 'column',
-                        backgroundColor: '#fff'
+                        backgroundColor: '#fff',
+                        zoomType: 'x',
+                        scrollablePlotArea: {
+                            minWidth: 2500,
+                            scrollPositionX: 0
+                        }
                     },
                     legend: {
                         enabled: false
@@ -1514,7 +1520,7 @@
                                                       '99',
                                                   ],
                         title: {
-                            text: 'Distance'
+                            text: 'Distance (yards) — scroll to explore, drag to zoom'
                         }
                     },
                     yAxis: {

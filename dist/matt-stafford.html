@@ -950,8 +950,8 @@
     <h1 class="font-light text-3xl text-center">TDs by Week</h1>
       <div class="flex flex-wrap p-10">
                 <p class="pb-10">
-            Matt Stafford has thrown 29              playoff TDs which is
-              about 6.5              % of his total TDs.
+            Matt Stafford has thrown 25              playoff TDs which is
+              about 5.6              % of his total TDs.
           </p>
               <div class="w-screen">
 
@@ -986,11 +986,11 @@
                                                                                                                                       'Week 15',
                                                                                                                                       'Week 16',
                                                                                                                                       'Week 17',
+                                                                                                                                      'Week 18',
                                                                                                                                       'Wildcard',
                                                                                                                                       'Divisional',
                                                                                                                                       'Conference',
                                                                                                                                       'Super Bowl',
-                                                                                                                                      '',
                                                                                                                   ],
                         title: {
                             text: 'Week'
@@ -1027,11 +1027,11 @@
                                 symbol: 'circle'
                             },
                             data: [
-                              28,29,23,20,20,27,26,32,20,25,25,28,28,22,19,13,30,11,9,4,5,3,                            ],
+                              28,29,23,20,20,27,26,32,20,25,25,28,28,22,19,13,30,7,13,4,5,3,                            ],
                             zoneAxis: 'x',
                             zones: [
                                 {
-                                    value: 17,
+                                    value: 18,
                                     color: '#0076B6'
                                 },
                                 {
@@ -1151,7 +1151,12 @@
                 Highcharts.chart('td-by-dist', {
                     chart: {
                         type: 'column',
-                        backgroundColor: '#fff'
+                        backgroundColor: '#fff',
+                        zoomType: 'x',
+                        scrollablePlotArea: {
+                            minWidth: 2500,
+                            scrollPositionX: 0
+                        }
                     },
                     legend: {
                         enabled: false
@@ -1263,7 +1268,7 @@
                                                       '99',
                                                   ],
                         title: {
-                            text: 'Distance'
+                            text: 'Distance (yards) — scroll to explore, drag to zoom'
                         }
                     },
                     yAxis: {
