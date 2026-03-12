@@ -6,6 +6,9 @@
  * Output: dist/index.html, dist/{qb-slug}.html, dist/search.html, dist/json/
  */
 
+error_reporting(E_ERROR);
+ini_set('display_errors', '0');
+
 chdir(__DIR__);
 
 $dist = __DIR__ . '/dist';
