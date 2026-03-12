@@ -1,27 +1,3 @@
-<?php
-require_once('helpers.php');
-
-$team_map = team_map();
-
-// Build QB list and nav menu from json/ directory
-$qbs  = [];
-$menu = [];
-foreach (scandir('json') as $file) {
-    if (preg_match('/^(.+)-tds\.json$/', $file, $m)) {
-        $n   = $m[1];
-        $qbn = ucwords(str_replace('-', ' ', $n));
-        $qbs[$n] = $qbn;
-
-        $parts     = explode(' ', $qbn);
-        $last_name = end($parts);
-        if ($last_name === 'Manning') {
-            $last_name = substr($qbn, 0, 1) . '. Manning';
-        }
-        $menu[] = ['url' => '?qb=' . $n, 'title' => $last_name];
-    }
-}
-arsort($menu);
-?>
 <!doctype html>
 <html>
 <head>
@@ -43,12 +19,40 @@ arsort($menu);
 
 <div class="bg-gray-500 fixed p-2 shadow-lg text-white w-screen z-10">
     <ul class="flex flex-wrap justify-around">
-        <?php foreach ($menu as $item): ?>
-            <li class="hover:text-blue-300 hover:underline">
-                <a href="<?php print $item['url'] ?>"><?php print $item['title'] ?></a>
+                    <li class="hover:text-blue-300 hover:underline">
+                <a href="tom-brady.html">Brady</a>
             </li>
-        <?php endforeach; ?>
-    </ul>
+                    <li class="hover:text-blue-300 hover:underline">
+                <a href="philip-rivers.html">Rivers</a>
+            </li>
+                    <li class="hover:text-blue-300 hover:underline">
+                <a href="peyton-manning.html">P. Manning</a>
+            </li>
+                    <li class="hover:text-blue-300 hover:underline">
+                <a href="matt-stafford.html">Stafford</a>
+            </li>
+                    <li class="hover:text-blue-300 hover:underline">
+                <a href="matt-ryan.html">Ryan</a>
+            </li>
+                    <li class="hover:text-blue-300 hover:underline">
+                <a href="eli-manning.html">E. Manning</a>
+            </li>
+                    <li class="hover:text-blue-300 hover:underline">
+                <a href="drew-brees.html">Brees</a>
+            </li>
+                    <li class="hover:text-blue-300 hover:underline">
+                <a href="dan-marino.html">Marino</a>
+            </li>
+                    <li class="hover:text-blue-300 hover:underline">
+                <a href="brett-favre.html">Favre</a>
+            </li>
+                    <li class="hover:text-blue-300 hover:underline">
+                <a href="ben-roethlisberger.html">Roethlisberger</a>
+            </li>
+                    <li class="hover:text-blue-300 hover:underline">
+                <a href="aaron-rodgers.html">Rodgers</a>
+            </li>
+            </ul>
 </div>
 
 <nav class="border-b-2 border-gray-200 p-4 mb-6 pt-16">
@@ -71,10 +75,18 @@ arsort($menu);
     Show all
     <select id="qb-select" class="border-b-2 border-black bg-transparent">
         <option value="">[all QBs]</option>
-        <?php foreach ($qbs as $slug => $name): ?>
-            <option value="<?php print $slug ?>"><?php print $name ?></option>
-        <?php endforeach; ?>
-    </select>
+                    <option value="aaron-rodgers">Aaron Rodgers</option>
+                    <option value="ben-roethlisberger">Ben Roethlisberger</option>
+                    <option value="brett-favre">Brett Favre</option>
+                    <option value="dan-marino">Dan Marino</option>
+                    <option value="drew-brees">Drew Brees</option>
+                    <option value="eli-manning">Eli Manning</option>
+                    <option value="matt-ryan">Matt Ryan</option>
+                    <option value="matt-stafford">Matt Stafford</option>
+                    <option value="peyton-manning">Peyton Manning</option>
+                    <option value="philip-rivers">Philip Rivers</option>
+                    <option value="tom-brady">Tom Brady</option>
+            </select>
     TDs thrown to
     <select id="player-select" class="border-b-2 border-black bg-transparent" disabled>
         <option value="">[any receiver]</option>
@@ -115,7 +127,7 @@ arsort($menu);
 </table>
 
 <script>
-const TEAM_MAP = <?php echo json_encode($team_map); ?>;
+const TEAM_MAP = {"ARI":"Cardinals","ATL":"Falcons","BAL":"Ravens","BUF":"Bills","CAR":"Panthers","CHI":"Bears","CIN":"Bengals","CLE":"Browns","DAL":"Cowboys","DEN":"Broncos","DET":"Lions","GNB":"Packers","HOU":"Texans","IND":"Colts","JAX":"Jaguars","KAN":"Chiefs","LAR":"Rams","LVR":"Raiders","LAC":"Chargers","MIA":"Dolphins","MIN":"Vikings","NOR":"Saints","NWE":"Patriots","NYG":"Giants","NYJ":"Jets","OAK":"Raiders","PHI":"Eagles","PHO":"Cardinals","PIT":"Steelers","RAI":"Raiders","RAM":"Rams","SDG":"Chargers","SEA":"Seahawks","SFO":"49ers","STL":"Rams","TAM":"Buccaneers","TEN":"Titans","WAS":"Commanders"};
 
 let allTds  = [];
 let sortCol = 'season';

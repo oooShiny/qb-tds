@@ -149,7 +149,7 @@ foreach ($files as $file) {
         <?php arsort($count);
         $i = 1; ?>
         <?php foreach ($count as $q => $c): ?>
-            <tr>
+            <tr<?php if ($i > 10): ?> class="<?php if ($i == 11): ?>border-t <?php endif; ?>text-gray-400"<?php endif; ?>>
                 <td><?php print $i; ?></td>
                 <td>
                     <a href="?qb=<?php print $q; ?>"><?php print ucwords(str_replace('-', ' ', $q)); ?></a>

@@ -199,7 +199,13 @@ function parse_time(string $time): array {
  * Matches: "... pass ... to RECEIVER for N yards touchdown"
  */
 function extract_receiver(string $detail): string {
-    if (preg_match('/ to (.+?) for \d+ yards? touchdown/i', $detail, $m)) {
+    // When a play was overturned by a challenge, PFR appends the corrected play after ". "
+    // Use only the corrected play to avoid capturing the challenge text as the receiver name.
+    if (stripos($detail, 'overturned') !== false) {
+        $pos = strrpos($detail, '. ');
+        if ($pos !== false) $detail = substr($detail, $pos + 2);
+    }
+    if (preg_match("/ to ([A-Za-z][A-Za-z'.\\- ]+?) for \\d+ yards? touchdown/i", $detail, $m)) {
         return trim($m[1]);
     }
     return '';
