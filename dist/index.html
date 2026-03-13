@@ -4850,7 +4850,8 @@
             <script>
                 Highcharts.chart('td-by-opp', {
                     chart: {
-                        type: 'column'
+                        type: 'column',
+                        zoomType: 'x'
                     },
                     legend: {
                         enabled: false
@@ -4898,7 +4899,7 @@
                                                       '',
                                                   ],
                         title: {
-                            text: 'Opponent'
+                            text: 'Opponent — drag to zoom'
                         }
                     },
                     yAxis: {
@@ -5354,7 +5355,8 @@
             <script>
                 Highcharts.chart('td-by-week', {
                     chart: {
-                        type: 'area'
+                        type: 'area',
+                        zoomType: 'x'
                     },
                     legend: {
                         enabled: false
@@ -5388,19 +5390,19 @@
                                                                                                                                       'Super Bowl',
                                                                                                                   ],
                         title: {
-                            text: 'Week'
+                            text: 'Week — drag to zoom'
                         }
                     },
                     yAxis: {
                         title: ' TDs',
                         plotLines: [{
                             color: 'gray',
-                            value: 1,
+                            value: 255,
                             width: '1',
                             zIndex: 4,
                             dashStyle: 'Dot',
                             label: {
-                                text: 'Average: 1',
+                                text: 'Average: 255',
                                 align: 'left',
                             }
                         }]

@@ -414,7 +414,8 @@ foreach ($tds as $team => $team_tds) {
             <script>
                 Highcharts.chart('td-by-opp', {
                     chart: {
-                        type: 'column'
+                        type: 'column',
+                        zoomType: 'x'
                     },
                     legend: {
                         enabled: false
@@ -443,7 +444,7 @@ foreach ($tds as $team => $team_tds) {
                           <?php endforeach; ?>
                         ],
                         title: {
-                            text: 'Opponent'
+                            text: 'Opponent — drag to zoom'
                         }
                     },
                     yAxis: {
@@ -613,7 +614,7 @@ foreach ($tds as $team => $team_tds) {
       }
     }
     ksort($tds_by_week['week'], SORT_NUMERIC);
-    $week_avg = count($tds) / count($tds_by_week['week']);
+    $week_avg = array_sum(array_map('count', $tds_by_week['week'])) / count($tds_by_week['week']);
   }
 
 
@@ -645,7 +646,8 @@ foreach ($tds as $team => $team_tds) {
             <script>
                 Highcharts.chart('td-by-week', {
                     chart: {
-                        type: 'area'
+                        type: 'area',
+                        zoomType: 'x'
                     },
                     legend: {
                         enabled: false
@@ -674,7 +676,7 @@ foreach ($tds as $team => $team_tds) {
                           <?php endif; ?>
                         ],
                         title: {
-                            text: 'Week'
+                            text: 'Week — drag to zoom'
                         }
                     },
                     yAxis: {

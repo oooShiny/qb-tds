@@ -697,7 +697,8 @@
             <script>
                 Highcharts.chart('td-by-opp', {
                     chart: {
-                        type: 'column'
+                        type: 'column',
+                        zoomType: 'x'
                     },
                     legend: {
                         enabled: false
@@ -741,7 +742,7 @@
                                                       'Rams',
                                                   ],
                         title: {
-                            text: 'Opponent'
+                            text: 'Opponent — drag to zoom'
                         }
                     },
                     yAxis: {
@@ -910,7 +911,8 @@
             <script>
                 Highcharts.chart('td-by-week', {
                     chart: {
-                        type: 'area'
+                        type: 'area',
+                        zoomType: 'x'
                     },
                     legend: {
                         enabled: false
@@ -944,7 +946,7 @@
                                                                                                                                       'Super Bowl',
                                                                                                                   ],
                         title: {
-                            text: 'Week'
+                            text: 'Week — drag to zoom'
                         }
                     },
                     yAxis: {
