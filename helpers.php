@@ -64,6 +64,26 @@ function qb_colors($qb) {
 }
 
 /**
+ * Single display color for each QB (for multi-QB comparison charts).
+ */
+function qb_primary_display_color($qb) {
+    $colors = [
+        'tom-brady'          => '#002244',
+        'drew-brees'         => '#d3bc8d',
+        'peyton-manning'     => '#003087',
+        'brett-favre'        => '#FFB612',
+        'ben-roethlisberger' => '#000000',
+        'dan-marino'         => '#005F61',
+        'philip-rivers'      => '#0080C6',
+        'eli-manning'        => '#0B2265',
+        'aaron-rodgers'      => '#203731',
+        'matt-ryan'          => '#A71930',
+        'matt-stafford'      => '#0076B6',
+    ];
+    return $colors[$qb] ?? '#999999';
+}
+
+/**
  * How many seasons before switching teams?
  */
 function qb_seasons($qb) {

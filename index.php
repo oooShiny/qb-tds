@@ -53,6 +53,7 @@ foreach ($files as $file) {
     <link rel="icon" href="/icon.ico" sizes="any"><!-- 32×32 -->
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-icon.png"><!-- 180×180 -->
+    <script defer data-site="qbtds.com" src="https://stats.br0wn.net/js/script.js"></script>
     <!-- Tailwind CSS and Alpine JS -->
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
           rel="stylesheet">
@@ -106,7 +107,7 @@ foreach ($files as $file) {
     </style>
 </head>
 <body>
-<div class="bg-gray-500 fixed p-2 shadow-lg text-white w-screen">
+<div class="bg-gray-500 fixed p-2 shadow-lg text-white w-screen z-50">
     <ul class="flex flex-wrap justify-around">
       <?php arsort($menu); ?>
       <?php foreach ($menu as $item): ?>
@@ -137,29 +138,75 @@ foreach ($files as $file) {
             TD passes broken down by different variables.
         </p>
     </div>
-    <table class="w-auto m-auto">
-        <thead>
-        <tr>
-            <th>Rank</th>
-            <th>QB</th>
-            <th>TDs</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php arsort($count);
-        $i = 1; ?>
-        <?php foreach ($count as $q => $c): ?>
-            <tr<?php if ($i > 10): ?> class="<?php if ($i == 11): ?>border-t <?php endif; ?>text-gray-400"<?php endif; ?>>
-                <td><?php print $i; ?></td>
-                <td>
-                    <a href="?qb=<?php print $q; ?>"><?php print ucwords(str_replace('-', ' ', $q)); ?></a>
-                </td>
-                <td><?php print $c; ?></td>
-            </tr>
-          <?php $i++; ?>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
+    <?php
+    arsort($count);
+    $qb_display_names = [];
+    foreach ($count as $qb => $_) {
+        $qbn = ucwords(str_replace('-', ' ', $qb));
+        $qbarr = explode(' ', $qbn);
+        $last = end($qbarr);
+        if ($last == 'Manning') {
+            $last = substr($qbn, 0, 1) . '. ' . $last;
+        }
+        $qb_display_names[$qb] = $last;
+    }
+    ?>
+    <div class="pb-10 m-auto lg:w-8/12">
+        <div id="td-rankings"></div>
+    </div>
+    <script>
+        var urlMap = {
+          <?php foreach ($count as $qb => $_): ?>
+          '<?php print addslashes($qb_display_names[$qb]); ?>': '?qb=<?php print $qb; ?>',
+          <?php endforeach; ?>
+        };
+        Highcharts.chart('td-rankings', {
+            chart: { type: 'bar' },
+            title: { text: 'TD Pass Rankings' },
+            xAxis: {
+                categories: [
+                  <?php foreach ($count as $qb => $_): ?>
+                  '<?php print addslashes($qb_display_names[$qb]); ?>',
+                  <?php endforeach; ?>
+                ],
+                title: { text: null }
+            },
+            yAxis: {
+                min: 0,
+                title: { text: 'Total TD Passes', align: 'high' },
+                labels: { overflow: 'justify' }
+            },
+            tooltip: { valueSuffix: ' TDs' },
+            plotOptions: {
+                bar: {
+                    colorByPoint: true,
+                    colors: [
+                      <?php foreach ($count as $qb => $_): ?>
+                      '<?php print qb_primary_display_color($qb); ?>',
+                      <?php endforeach; ?>
+                    ],
+                    dataLabels: { enabled: true },
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function() {
+                                window.location = urlMap[this.category];
+                            }
+                        }
+                    }
+                }
+            },
+            legend: { enabled: false },
+            series: [{
+                name: 'TD Passes',
+                data: [
+                  <?php foreach ($count as $qb => $c): ?>
+                  <?php print $c; ?>,
+                  <?php endforeach; ?>
+                ]
+            }]
+        });
+    </script>
 
 <?php else: ?>
     <nav class="border-b-2 border-gray-200 p-4 mb-10 pt-16">
@@ -465,6 +512,18 @@ foreach ($tds as $team => $team_tds) {
                         }
                     },
                     series: [
+                      <?php if (empty($qb_path)): ?>
+                        {
+                            name: 'All QBs Combined',
+                            colorByPoint: false,
+                            color: '#4B6FA5',
+                            data: [
+                              <?php foreach ($tds_by_opp['opp'] as $opp => $n): ?>
+                              <?php print $n; ?>,
+                              <?php endforeach; ?>
+                            ]
+                        }
+                      <?php else: ?>
                       <?php foreach($tds_by_opp['team'] as $team => $team_tds): ?>
                         {
                             name: '<?php print $qb_last_name ?? $team; ?> TDs',
@@ -480,6 +539,7 @@ foreach ($tds as $team => $team_tds) {
                             ]
                         },
                       <?php endforeach;?>
+                      <?php endif; ?>
                     ]
                 });
             </script>
@@ -640,6 +700,7 @@ foreach ($tds as $team => $team_tds) {
               % of his total TDs.
           </p>
       <?php endif; ?>
+        <?php if ($qb_path): ?>
         <div class="w-screen">
 
             <div id="td-by-week"></div>
@@ -657,23 +718,13 @@ foreach ($tds as $team => $team_tds) {
                     },
                     xAxis: {
                         categories: [
-                          <?php if ($qb_path): ?>
-                              <?php foreach($tds_by_week as $week => $week_td): ?>
-                                  <?php if (!isset($playoff_weeks[$week])): ?>
-                                    'Week <?php print $week; ?>',
-                                  <?php else: ?>
-                                    '<?php print $playoff_weeks[$week]; ?>',
-                                  <?php endif; ?>
-                              <?php endforeach; ?>
-                          <?php else: ?>
-                              <?php foreach($tds_by_week['week'] as $week => $week_td): ?>
-                                  <?php if (!isset($playoff_weeks[$week])): ?>
-                                    'Week <?php print $week; ?>',
-                                  <?php else: ?>
-                                    '<?php print $playoff_weeks[$week]; ?>',
-                                  <?php endif; ?>
-                              <?php endforeach; ?>
-                          <?php endif; ?>
+                          <?php foreach($tds_by_week as $week => $week_td): ?>
+                              <?php if (!isset($playoff_weeks[$week])): ?>
+                                'Week <?php print $week; ?>',
+                              <?php else: ?>
+                                '<?php print $playoff_weeks[$week]; ?>',
+                              <?php endif; ?>
+                          <?php endforeach; ?>
                         ],
                         title: {
                             text: 'Week — drag to zoom'
@@ -697,11 +748,6 @@ foreach ($tds as $team => $team_tds) {
                         valueSuffix: ' TDs'
                     },
                     plotOptions: {
-                        <?php if (array_key_exists('week', $tds_by_week)): ?>
-                        series: {
-                            stacking: 'normal'
-                        },
-                        <?php endif; ?>
                         column: {
                             dataLabels: {
                                 enabled: true
@@ -709,7 +755,6 @@ foreach ($tds as $team => $team_tds) {
                         }
                     },
                     series: [
-                      <?php if ($qb_path): ?>
                         {
                             name: '<?php print $qb_last_name ?? ''; ?> TDs',
                             marker: {
@@ -731,24 +776,82 @@ foreach ($tds as $team => $team_tds) {
                                 }
                             ]
                         }
-                      <?php else: ?>
-                      <?php foreach ($tds_by_week as $qb => $weeks): ?>
-                        <?php if ($qb !== 'week'): ?>
-                        {
-                            name: '<?php print $qb; ?>',
-                            data: [
-                              <?php foreach ($weeks as $week => $week_td) {
-                              print count($weeks[$week]) . ',';
-                            }?>
-                            ]
-                        },
-                      <?php endif; ?>
-                      <?php endforeach; ?>
-                      <?php endif; ?>
                     ]
                 });
             </script>
         </div>
+        <?php else: ?>
+        <?php
+        // Chart B: Career year comparison — regular season only
+        $career_year_data = [];
+        $max_career_years = 0;
+        foreach ($tds as $qb => $qtds) {
+            $seasons = [];
+            foreach ($qtds as $td) {
+                if ((int)$td['week'] <= 18) {
+                    $seasons[$td['season']][] = $td;
+                }
+            }
+            if (empty($seasons)) continue;
+            ksort($seasons);
+            $all_seasons = array_keys($seasons);
+            $first = (int)$all_seasons[0];
+            $years = [];
+            foreach ($all_seasons as $s) {
+                $years[(int)$s - $first + 1] = count($seasons[$s]);
+            }
+            if (!empty($years)) {
+                $max_career_years = max($max_career_years, max(array_keys($years)));
+            }
+            $career_year_data[$qb] = $years;
+        }
+        ?>
+        <div class="w-screen">
+            <div id="td-career-year"></div>
+            <script>
+                Highcharts.chart('td-career-year', {
+                    chart: { type: 'line', zoomType: 'x' },
+                    title: { text: 'TDs by Career Year' },
+                    subtitle: { text: 'Regular season only (Week \u2264 18)' },
+                    xAxis: {
+                        categories: [
+                          <?php for ($y = 1; $y <= $max_career_years; $y++): ?>
+                          'Year <?php print $y; ?>',
+                          <?php endfor; ?>
+                        ],
+                        title: { text: 'Career Year' }
+                    },
+                    yAxis: {
+                        title: { text: 'TD Passes' },
+                        min: 0
+                    },
+                    tooltip: { shared: false, valueSuffix: ' TDs' },
+                    legend: {
+                        enabled: true,
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom'
+                    },
+                    plotOptions: {
+                        line: { connectNulls: false }
+                    },
+                    series: [
+                      <?php foreach ($career_year_data as $qb => $years): ?>
+                      {
+                          name: '<?php print addslashes($qb_display_names[$qb]); ?>',
+                          color: '<?php print qb_primary_display_color($qb); ?>',
+                          data: [
+                            <?php for ($y = 1; $y <= $max_career_years; $y++): ?>
+                            <?php print isset($years[$y]) ? $years[$y] : 'null'; ?>,
+                            <?php endfor; ?>
+                          ]
+                      },
+                      <?php endforeach; ?>
+                    ]
+                });
+            </script>
+        </div>
+        <?php endif; ?>
     </div>
 </div>
 
@@ -814,7 +917,28 @@ foreach ($tds as $team => $team_tds) {
                         name: 'Players',
                         colorByPoint: true,
                         data: [
-                          <?php
+                          <?php if (empty($qb_path)):
+                          // Home page: >80 TDs = individual slice; 1-80 TDs = 20-wide buckets
+                          $buckets = [];
+                          foreach ($tds_by_player as $player => $ptds) {
+                            $c = count($ptds);
+                            if ($c > 80) {
+                              print '{name: "' . addslashes($player) . '", y: ' . $c . '},';
+                            } else {
+                              $d = intdiv($c - 1, 20); // 0=1-20, 1=21-40, 2=41-60, 3=61-80
+                              if (!isset($buckets[$d])) {
+                                $buckets[$d] = ['lo' => $d * 20 + 1, 'hi' => $d * 20 + 20, 'count' => 0, 'total' => 0];
+                              }
+                              $buckets[$d]['count']++;
+                              $buckets[$d]['total'] += $c;
+                            }
+                          }
+                          krsort($buckets);
+                          foreach ($buckets as $info) {
+                            $label = $info['count'] . ' Receivers with ' . $info['lo'] . '-' . $info['hi'] . ' TDs';
+                            print '{name: "' . $label . '", y: ' . $info['total'] . '},';
+                          }
+                          else:
                           $ones = 0; $twos = 0; $threes = 0; $fours = 0; $fives = 0;
                           $sixes = 0; $sevens = 0; $eights = 0; $nines = 0; $tens = 0;
                           foreach ($tds_by_player as $player => $ptds) {
@@ -858,7 +982,9 @@ foreach ($tds as $team => $team_tds) {
                                   break;
                               }
                             }
-                          }?>
+                          }
+                          endif; ?>
+                          <?php if (!empty($qb_path)): ?>
                             {
                                 name: "<?php print $tens; ?> Players with 10 TDs",
                                 y: <?php print $tens * 5; ?>,
@@ -899,6 +1025,7 @@ foreach ($tds as $team => $team_tds) {
                                 name: "<?php print $ones; ?> Players with 1 TD",
                                 y: <?php print $ones; ?>,
                             },
+                          <?php endif; ?>
                         ]
                     }]
                 });
@@ -906,6 +1033,68 @@ foreach ($tds as $team => $team_tds) {
         </div>
     </div>
 </div>
+
+<?php if (empty($qb_path)): ?>
+<?php
+// Chart E: Regular season vs. playoff breakdown
+$reg_vs_playoff = [];
+foreach ($count as $qb => $_) {
+    $reg = $post = 0;
+    foreach ($tds[$qb] as $td) {
+        (int)$td['week'] <= 18 ? $reg++ : $post++;
+    }
+    $reg_vs_playoff[$qb] = [$reg, $post];
+}
+?>
+<div class="py-10" id="reg-playoff">
+    <h1 class="font-light text-3xl text-center">Regular Season vs. Playoffs</h1>
+    <div class="flex flex-wrap p-10">
+        <div class="w-screen">
+            <div id="td-reg-playoff"></div>
+            <script>
+                Highcharts.chart('td-reg-playoff', {
+                    chart: { type: 'bar' },
+                    title: { text: 'Regular Season vs. Playoff TDs' },
+                    xAxis: {
+                        categories: [
+                          <?php foreach ($reg_vs_playoff as $qb => $_): ?>
+                          '<?php print addslashes($qb_display_names[$qb]); ?>',
+                          <?php endforeach; ?>
+                        ],
+                        title: { text: null }
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: { text: 'TD Passes' }
+                    },
+                    tooltip: { valueSuffix: ' TDs' },
+                    plotOptions: {
+                        bar: { dataLabels: { enabled: true } }
+                    },
+                    legend: { reversed: true },
+                    series: [{
+                        name: 'Regular Season',
+                        color: '#4B6FA5',
+                        data: [
+                          <?php foreach ($reg_vs_playoff as $qb => $counts): ?>
+                          <?php print $counts[0]; ?>,
+                          <?php endforeach; ?>
+                        ]
+                    }, {
+                        name: 'Playoffs',
+                        color: '#C0392B',
+                        data: [
+                          <?php foreach ($reg_vs_playoff as $qb => $counts): ?>
+                          <?php print $counts[1]; ?>,
+                          <?php endforeach; ?>
+                        ]
+                    }]
+                });
+            </script>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
 
 <div class="py-10" id="distance">
     <h1 class="font-light text-3xl text-center">TDs by Distance</h1>
@@ -942,6 +1131,7 @@ foreach ($tds as $team => $team_tds) {
             (<?php print number_format($oqb['y']); ?>) threw in his
             entire career.
         </p>
+        <?php if ($qb_path): ?>
         <div class="w-screen">
 
             <div id="td-by-dist"></div>
@@ -959,12 +1149,10 @@ foreach ($tds as $team => $team_tds) {
                     legend: {
                         enabled: false
                     },
-                  <?php if ($qb_path): ?>
-                      <?php if ($qb_last_name == 'Favre' || $qb_path == 'aaron-rodgers'): ?>
-                        colors: ['<?php print $qb_colors[0];?>', '<?php print $qb_colors[1];?>', '<?php print $qb_colors[2];?>'],
-                      <?php else: ?>
-                        colors: ['<?php print $qb_colors[0];?>', '<?php print $qb_colors[1];?>'],
-                      <?php endif; ?>
+                  <?php if ($qb_last_name == 'Favre' || $qb_path == 'aaron-rodgers'): ?>
+                    colors: ['<?php print $qb_colors[0];?>', '<?php print $qb_colors[1];?>', '<?php print $qb_colors[2];?>'],
+                  <?php else: ?>
+                    colors: ['<?php print $qb_colors[0];?>', '<?php print $qb_colors[1];?>'],
                   <?php endif; ?>
                     title: {
                         text: ''
@@ -1016,6 +1204,68 @@ foreach ($tds as $team => $team_tds) {
                 });
             </script>
         </div>
+        <?php else: ?>
+        <?php
+        // Chart C: Normalized TD distance profiles
+        $dist_buckets = [
+            ['1-5 yds',   1,  5],
+            ['6-10 yds',  6, 10],
+            ['11-20 yds', 11, 20],
+            ['21-30 yds', 21, 30],
+            ['31-50 yds', 31, 50],
+            ['51+ yds',   51, 99],
+        ];
+        $dist_profile = [];
+        foreach ($tds as $qb => $qtds) {
+            $total = count($qtds);
+            $by_yard = [];
+            foreach ($qtds as $td) { $by_yard[(int)$td['yards_gained']] = ($by_yard[(int)$td['yards_gained']] ?? 0) + 1; }
+            foreach ($dist_buckets as $bucket) {
+                [$label, $lo, $hi] = $bucket;
+                $n = 0;
+                for ($y = $lo; $y <= $hi; $y++) $n += $by_yard[$y] ?? 0;
+                $dist_profile[$qb][$label] = round(100 * $n / $total, 1);
+            }
+        }
+        $bucket_labels = array_column($dist_buckets, 0);
+        ?>
+        <div class="w-screen">
+            <div id="td-dist-profile"></div>
+            <script>
+                Highcharts.chart('td-dist-profile', {
+                    chart: { type: 'column' },
+                    title: { text: 'TD Distance Profiles by QB' },
+                    subtitle: { text: 'Normalized \u2014 removes total volume differences' },
+                    xAxis: {
+                        categories: ['1-5 yds', '6-10 yds', '11-20 yds', '21-30 yds', '31-50 yds', '51+ yds'],
+                        title: { text: 'Pass Distance' }
+                    },
+                    yAxis: {
+                        title: { text: 'Percentage of TDs (%)' },
+                        labels: { format: '{value}%' }
+                    },
+                    tooltip: { valueSuffix: '%' },
+                    plotOptions: {
+                        column: { grouping: true, dataLabels: { enabled: false } }
+                    },
+                    legend: { enabled: true },
+                    series: [
+                      <?php foreach ($dist_profile as $qb => $profile): ?>
+                      {
+                          name: '<?php print addslashes($qb_display_names[$qb]); ?>',
+                          color: '<?php print qb_primary_display_color($qb); ?>',
+                          data: [
+                            <?php foreach ($bucket_labels as $label): ?>
+                            <?php print $profile[$label]; ?>,
+                            <?php endforeach; ?>
+                          ]
+                      },
+                      <?php endforeach; ?>
+                    ]
+                });
+            </script>
+        </div>
+        <?php endif; ?>
     </div>
 </div>
 <?php //endif; ?>

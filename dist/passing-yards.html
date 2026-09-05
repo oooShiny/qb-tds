@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NFL Career Passing Yards Leaders — Bar Chart Race</title>
+    <link rel="icon" href="/icon.ico" sizes="any"><!-- 32×32 -->
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-icon.png"><!-- 180×180 -->
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #111;
+            color: #eee;
+            font-family: "Helvetica Neue", Arial, sans-serif;
+        }
+
+        #container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #aaa;
+            margin-bottom: 4px;
+        }
+
+        #year-display {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        svg text {
+            font-family: "Helvetica Neue", Arial, sans-serif;
+        }
+
+        #controls {
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        button {
+            background: #333;
+            color: #eee;
+            border: 1px solid #555;
+            padding: 8px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        #speed-label {
+            color: #aaa;
+            font-size: 0.85rem;
+        }
+
+        input[type=range] {
+            accent-color: #4af;
+        }
+
+        #source {
+            margin-top: 12px;
+            font-size: 0.75rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <h1>NFL Career Passing Yards — All-Time Leaders Through Each Season</h1>
+    <div id="year-display">1932</div>
+    <svg id="chart"></svg>
+    <div id="controls">
+        <button id="btn-play">▶ Play</button>
+        <button id="btn-reset">↺ Reset</button>
+        <span id="speed-label">Speed:</span>
+        <input type="range" id="speed" min="100" max="2000" step="100" value="600">
+        <span id="speed-val">600ms</span>
+    </div>
+    <div id="legend" style="margin-top:14px; display:flex; align-items:center; gap:10px; font-size:0.8rem; color:#666;">
+        <span style="display:inline-block; width:28px; height:12px; border-radius:2px; background:linear-gradient(to right,#002244,#C60C30);"></span>
+        <span>Colored bars represent notable QBs styled with their primary team colors.</span>
+        <span style="display:inline-block; width:28px; height:12px; border-radius:2px; background:#444; margin-left:8px;"></span>
+        <span>Gray bars are other players without a team assignment.</span>
+    </div>
+    <div id="source" style="margin-top:6px;">Source: Pro-Football-Reference.com</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script>
+    (async () => {
+        const data = await fetch('passing_yards_by_year.json').then(r => r.json());
+        const years = Object.keys(data).map(Number).sort((a, b) => a - b);
+        const TOP = 15;
+
+        // { primary, secondary, abbr } per player (most iconic team)
+        const PLAYER_TEAMS = {
+            'Arnie Herber': {p: '#203731', s: '#FFB612', a: 'GB'},
+            'Walt Holmer': {p: '#0B162A', s: '#C83803', a: 'CHI'},
+            'Sammy Baugh': {p: '#773141', s: '#FFB612', a: 'WAS'},
+            'Sid Luckman': {p: '#0B162A', s: '#C83803', a: 'CHI'},
+            'Bob Waterfield': {p: '#003594', s: '#FFA300', a: 'LAR'},
+            'Norm Van Brocklin': {p: '#003594', s: '#FFA300', a: 'LAR'},
+            'Tobin Rote': {p: '#203731', s: '#FFB612', a: 'GB'},
+            'Bobby Layne': {p: '#0076B6', s: '#B0B7BC', a: 'DET'},
+            'Y.A. Tittle': {p: '#0B2265', s: '#A71930', a: 'NYG'},
+            'Johnny Unitas': {p: '#003087', s: '#FFFFFF', a: 'BAL'},
+            'Bart Starr': {p: '#203731', s: '#FFB612', a: 'GB'},
+            'Len Dawson': {p: '#E31837', s: '#FFB81C', a: 'KC'},
+            'Roman Gabriel': {p: '#003594', s: '#FFA300', a: 'LAR'},
+            'John Brodie': {p: '#AA0000', s: '#B3995D', a: 'SF'},
+            'Sonny Jurgensen': {p: '#773141', s: '#FFB612', a: 'WAS'},
+            'Don Meredith': {p: '#003594', s: '#869397', a: 'DAL'},
+            'Fran Tarkenton': {p: '#4F2683', s: '#FFC62F', a: 'MIN'},
+            'Roger Staubach': {p: '#003594', s: '#869397', a: 'DAL'},
+            'Terry Bradshaw': {p: '#101820', s: '#FFB612', a: 'PIT'},
+            'Ken Stabler': {p: '#000000', s: '#A5ACAF', a: 'OAK'},
+            'Jim Hart': {p: '#97233F', s: '#FFB612', a: 'ARI'},
+            'Dan Fouts': {p: '#0080C6', s: '#FFC20E', a: 'SD'},
+            'Joe Ferguson': {p: '#00338D', s: '#C60C30', a: 'BUF'},
+            'Brian Sipe': {p: '#311D00', s: '#FF3C00', a: 'CLE'},
+            'Steve DeBerg': {p: '#AA0000', s: '#B3995D', a: 'SF'},
+            'Joe Montana': {p: '#AA0000', s: '#B3995D', a: 'SF'},
+            'Dave Krieg': {p: '#002244', s: '#69BE28', a: 'SEA'},
+            'Phil Simms': {p: '#0B2265', s: '#A71930', a: 'NYG'},
+            'Boomer Esiason': {p: '#FB4F14', s: '#000000', a: 'CIN'},
+            'Jim McMahon': {p: '#0B162A', s: '#C83803', a: 'CHI'},
+            'Dan Marino': {p: '#008E97', s: '#FC4C02', a: 'MIA'},
+            'Jim Kelly': {p: '#00338D', s: '#C60C30', a: 'BUF'},
+            'Warren Moon': {p: '#4B92DB', s: '#C41230', a: 'HOU'},
+            'John Elway': {p: '#FB4F14', s: '#002244', a: 'DEN'},
+            'Troy Aikman': {p: '#003594', s: '#869397', a: 'DAL'},
+            'Steve Young': {p: '#AA0000', s: '#B3995D', a: 'SF'},
+            'Brett Favre': {p: '#203731', s: '#FFB612', a: 'GB'},
+            'Mark Brunell': {p: '#006778', s: '#9F792C', a: 'JAX'},
+            'Vinny Testaverde': {p: '#241773', s: '#9E7C0C', a: 'BAL'},
+            'Drew Bledsoe': {p: '#002244', s: '#C60C30', a: 'NE'},
+            'Jeff George': {p: '#4F2683', s: '#FFC62F', a: 'MIN'},
+            'Kerry Collins': {p: '#0B2265', s: '#A71930', a: 'NYG'},
+            'Trent Green': {p: '#E31837', s: '#FFB81C', a: 'KC'},
+            'Brad Johnson': {p: '#D50A0A', s: '#FF7900', a: 'TB'},
+            'Peyton Manning': {p: '#002C5F', s: '#A2AAAD', a: 'IND'},
+            'Tom Brady': {p: '#002244', s: '#C60C30', a: 'NE'},
+            'Donovan McNabb': {p: '#004C54', s: '#A5ACAF', a: 'PHI'},
+            'Jake Plummer': {p: '#FB4F14', s: '#002244', a: 'DEN'},
+            'Marc Bulger': {p: '#003594', s: '#FFA300', a: 'STL'},
+            'Eli Manning': {p: '#0B2265', s: '#A71930', a: 'NYG'},
+            'Ben Roethlisberger': {p: '#101820', s: '#FFB612', a: 'PIT'},
+            'Carson Palmer': {p: '#FB4F14', s: '#000000', a: 'CIN'},
+            'Matt Hasselbeck': {p: '#002244', s: '#69BE28', a: 'SEA'},
+            'Philip Rivers': {p: '#0080C6', s: '#FFC20E', a: 'LAC'},
+            'Tony Romo': {p: '#003594', s: '#869397', a: 'DAL'},
+            'Matt Ryan': {p: '#A71930', s: '#000000', a: 'ATL'},
+            'Jay Cutler': {p: '#0B162A', s: '#C83803', a: 'CHI'},
+            'Joe Flacco': {p: '#241773', s: '#9E7C0C', a: 'BAL'},
+            'Drew Brees': {p: '#101820', s: '#D3BC8D', a: 'NO'},
+            'Matthew Stafford': {p: '#0076B6', s: '#B0B7BC', a: 'DET'},
+            'Aaron Rodgers': {p: '#203731', s: '#FFB612', a: 'GB'},
+            'Cam Newton': {p: '#0085CA', s: '#101820', a: 'CAR'},
+            'Andrew Luck': {p: '#002C5F', s: '#A2AAAD', a: 'IND'},
+            'Russell Wilson': {p: '#002244', s: '#69BE28', a: 'SEA'},
+            'Kirk Cousins': {p: '#4F2683', s: '#FFC62F', a: 'MIN'},
+            'Dak Prescott': {p: '#003594', s: '#869397', a: 'DAL'},
+            'Jared Goff': {p: '#003594', s: '#FFA300', a: 'LAR'},
+            'Patrick Mahomes': {p: '#E31837', s: '#FFB81C', a: 'KC'},
+            'Lamar Jackson': {p: '#241773', s: '#9E7C0C', a: 'BAL'},
+            'Josh Allen': {p: '#00338D', s: '#C60C30', a: 'BUF'},
+            'Justin Herbert': {p: '#0080C6', s: '#FFC20E', a: 'LAC'},
+            'Joe Burrow': {p: '#FB4F14', s: '#000000', a: 'CIN'},
+            'Jalen Hurts': {p: '#004C54', s: '#A5ACAF', a: 'PHI'},
+            'Tua Tagovailoa': {p: '#008E97', s: '#FC4C02', a: 'MIA'},
+            'Trevor Lawrence': {p: '#006778', s: '#9F792C', a: 'JAX'},
+            'Brock Purdy': {p: '#AA0000', s: '#B3995D', a: 'SF'},
+        };
+
+        function getTeam(name) {
+            if (PLAYER_TEAMS[name]) return PLAYER_TEAMS[name];
+            return {p: '#444', s: '#555', a: ''};
+        }
+
+        const margin = {top: 30, right: 120, bottom: 10, left: 180};
+        const width = 900 - margin.left - margin.right;
+        const barHeight = 36;
+        const height = TOP * barHeight;
+
+        const svg = d3.select('#chart')
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom);
+
+        // Define gradients in <defs>
+        const defs = svg.append('defs');
+
+        function gradientId(name) {
+            return 'grad-' + name.replace(/[^a-zA-Z0-9]/g, '_');
+        }
+
+        // Pre-create a gradient for every known player
+        function ensureGradient(name) {
+            const id = gradientId(name);
+            if (defs.select('#' + id).empty()) {
+                const team = getTeam(name);
+                const grad = defs.append('linearGradient')
+                    .attr('id', id)
+                    .attr('x1', '0%').attr('y1', '0%')
+                    .attr('x2', '100%').attr('y2', '0%');
+                grad.append('stop').attr('offset', '0%').attr('stop-color', team.p);
+                grad.append('stop').attr('offset', '100%').attr('stop-color', team.s).attr('stop-opacity', 0.75);
+            }
+            return 'url(#' + id + ')';
+        }
+
+        // Pre-build gradients for all known players
+        Object.keys(PLAYER_TEAMS).forEach(ensureGradient);
+
+        const g = svg.append('g')
+            .attr('transform', `translate(${margin.left},${margin.top})`);
+
+        const x = d3.scaleLinear().range([0, width]);
+        const y = d3.scaleBand().range([0, height]).padding(0.15);
+
+        const xAxis = g.append('g').attr('class', 'x-axis');
+        const barsG = g.append('g');
+        const abbrG = g.append('g');  // team abbreviation labels inside bars
+        const labelsG = g.append('g');
+        const valuesG = g.append('g');
+
+        function fmt(n) {
+            return d3.format(',')(n);
+        }
+
+        // Determine if text on primary color needs to be light or dark
+        function labelColor(name) {
+            const team = getTeam(name);
+            // parse hex to luminance
+            const hex = team.p.replace('#', '');
+            const r = parseInt(hex.substring(0, 2), 16);
+            const gc = parseInt(hex.substring(2, 4), 16);
+            const b = parseInt(hex.substring(4, 6), 16);
+            const lum = (0.299 * r + 0.587 * gc + 0.114 * b) / 255;
+            return lum > 0.45 ? '#111' : '#fff';
+        }
+
+        function render(year, duration = 0) {
+            const entries = (data[year] || []).slice(0, TOP);
+            const maxYds = entries[0]?.yds || 1;
+
+            x.domain([0, maxYds * 1.05]);
+            y.domain(entries.map(d => d.player));
+
+            // Ensure gradients exist for any new players
+            entries.forEach(d => ensureGradient(d.player));
+
+            // X axis
+            xAxis.transition().duration(duration)
+                .call(d3.axisTop(x).ticks(5).tickFormat(d => d3.format('~s')(d)))
+                .call(ax => ax.select('.domain').remove())
+                .call(ax => ax.selectAll('line').attr('stroke', '#333'))
+                .call(ax => ax.selectAll('text').attr('fill', '#666').attr('font-size', '11px'));
+
+            // Bars
+            const bars = barsG.selectAll('rect').data(entries, d => d.player);
+            bars.enter().append('rect')
+                .attr('y', d => y(d.player))
+                .attr('height', y.bandwidth())
+                .attr('x', 0)
+                .attr('width', 0)
+                .attr('fill', d => ensureGradient(d.player))
+                .attr('rx', 3)
+                .merge(bars)
+                .transition().duration(duration).ease(d3.easeLinear)
+                .attr('y', d => y(d.player))
+                .attr('height', y.bandwidth())
+                .attr('width', d => x(d.yds))
+                .attr('fill', d => ensureGradient(d.player));
+            bars.exit().transition().duration(duration).attr('width', 0).remove();
+
+            // Team abbreviation labels inside bars
+            const abbrPad = 8;
+            const abbrLabels = abbrG.selectAll('text').data(entries, d => d.player);
+            abbrLabels.enter().append('text')
+                .attr('x', abbrPad)
+                .attr('y', d => y(d.player) + y.bandwidth() / 2)
+                .attr('dy', '0.35em')
+                .attr('font-size', '11px')
+                .attr('font-weight', '700')
+                .attr('letter-spacing', '0.5px')
+                .style('opacity', 0)
+                .text(d => getTeam(d.player).a)
+                .merge(abbrLabels)
+                .transition().duration(duration).ease(d3.easeLinear)
+                .attr('y', d => y(d.player) + y.bandwidth() / 2)
+                .attr('fill', d => labelColor(d.player))
+                // only show abbr if bar is wide enough
+                .style('opacity', d => x(d.yds) > 45 ? 1 : 0)
+                .text(d => getTeam(d.player).a);
+            abbrLabels.exit().transition().duration(duration).style('opacity', 0).remove();
+
+            // Player name labels (left of bar)
+            const nameLabels = labelsG.selectAll('text').data(entries, d => d.player);
+            nameLabels.enter().append('text')
+                .attr('x', -8)
+                .attr('y', d => y(d.player) + y.bandwidth() / 2)
+                .attr('dy', '0.35em')
+                .attr('text-anchor', 'end')
+                .attr('font-size', '13px')
+                .attr('fill', '#ccc')
+                .text(d => d.player)
+                .merge(nameLabels)
+                .transition().duration(duration).ease(d3.easeLinear)
+                .attr('y', d => y(d.player) + y.bandwidth() / 2)
+                .text(d => d.player);
+            nameLabels.exit().transition().duration(duration).style('opacity', 0).remove();
+
+            // Value labels (right of bar)
+            const valLabels = valuesG.selectAll('text').data(entries, d => d.player);
+            valLabels.enter().append('text')
+                .attr('x', d => x(d.yds) + 6)
+                .attr('y', d => y(d.player) + y.bandwidth() / 2)
+                .attr('dy', '0.35em')
+                .attr('font-size', '12px')
+                .attr('fill', '#aaa')
+                .text(d => fmt(d.yds))
+                .merge(valLabels)
+                .transition().duration(duration).ease(d3.easeLinear)
+                .attr('x', d => x(d.yds) + 6)
+                .attr('y', d => y(d.player) + y.bandwidth() / 2)
+                .text(d => fmt(d.yds));
+            valLabels.exit().transition().duration(duration).style('opacity', 0).remove();
+
+            document.getElementById('year-display').textContent = year;
+        }
+
+        render(years[0]);
+
+        let currentIdx = 0;
+        let timer = null;
+
+        function getSpeed() {
+            return parseInt(document.getElementById('speed').value);
+        }
+
+        function step() {
+            if (currentIdx >= years.length) {
+                stopPlay();
+                return;
+            }
+            render(years[currentIdx], getSpeed() * 0.9);
+            currentIdx++;
+        }
+
+        function startPlay() {
+            if (timer) return;
+            document.getElementById('btn-play').textContent = '⏸ Pause';
+            timer = setInterval(step, getSpeed());
+        }
+
+        function stopPlay() {
+            clearInterval(timer);
+            timer = null;
+            document.getElementById('btn-play').textContent = '▶ Play';
+        }
+
+        document.getElementById('btn-play').addEventListener('click', () => {
+            if (timer) stopPlay(); else startPlay();
+        });
+
+        document.getElementById('btn-reset').addEventListener('click', () => {
+            stopPlay();
+            currentIdx = 0;
+            render(years[0]);
+        });
+
+        const speedInput = document.getElementById('speed');
+        const speedVal = document.getElementById('speed-val');
+        speedInput.addEventListener('input', () => {
+            speedVal.textContent = speedInput.value + 'ms';
+            if (timer) {
+                stopPlay();
+                startPlay();
+            }
+        });
+    })();
+</script>
+</body>
+</html>

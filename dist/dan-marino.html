@@ -7,6 +7,7 @@
     <link rel="icon" href="/icon.ico" sizes="any"><!-- 32×32 -->
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-icon.png"><!-- 180×180 -->
+    <script defer data-site="qbtds.com" src="https://stats.br0wn.net/js/script.js"></script>
     <!-- Tailwind CSS and Alpine JS -->
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
           rel="stylesheet">
@@ -60,7 +61,7 @@
     </style>
 </head>
 <body>
-<div class="bg-gray-500 fixed p-2 shadow-lg text-white w-screen">
+<div class="bg-gray-500 fixed p-2 shadow-lg text-white w-screen z-50">
     <ul class="flex flex-wrap justify-around">
                       <li class="hover:text-blue-300 hover:underline"><a
                       href="tom-brady.html">Brady</a>
@@ -200,7 +201,7 @@
                         }
                     },
                     series: [
-                                              {
+                                                                    {
                             name: 'Marino TDs',
                             data: [
                                                             72,
@@ -234,7 +235,7 @@
                                                             1,
                                                           ]
                         },
-                                          ]
+                                                                ]
                 });
             </script>
         </div>
@@ -340,7 +341,7 @@
             Dan Marino has thrown 32              playoff TDs which is
               about 7.1              % of his total TDs.
           </p>
-              <div class="w-screen">
+                      <div class="w-screen">
 
             <div id="td-by-week"></div>
             <script>
@@ -357,27 +358,27 @@
                     },
                     xAxis: {
                         categories: [
-                                                                                                                              'Week 1',
-                                                                                                                                      'Week 2',
-                                                                                                                                      'Week 3',
-                                                                                                                                      'Week 4',
-                                                                                                                                      'Week 5',
-                                                                                                                                      'Week 6',
-                                                                                                                                      'Week 7',
-                                                                                                                                      'Week 8',
-                                                                                                                                      'Week 9',
-                                                                                                                                      'Week 10',
-                                                                                                                                      'Week 11',
-                                                                                                                                      'Week 12',
-                                                                                                                                      'Week 13',
-                                                                                                                                      'Week 14',
-                                                                                                                                      'Week 15',
-                                                                                                                                      'Week 16',
-                                                                                                                                      'Week 17',
-                                                                                                                                      'Wildcard',
-                                                                                                                                      'Divisional',
-                                                                                                                                      'Conference',
-                                                                                                                  ],
+                                                                                        'Week 1',
+                                                                                                                      'Week 2',
+                                                                                                                      'Week 3',
+                                                                                                                      'Week 4',
+                                                                                                                      'Week 5',
+                                                                                                                      'Week 6',
+                                                                                                                      'Week 7',
+                                                                                                                      'Week 8',
+                                                                                                                      'Week 9',
+                                                                                                                      'Week 10',
+                                                                                                                      'Week 11',
+                                                                                                                      'Week 12',
+                                                                                                                      'Week 13',
+                                                                                                                      'Week 14',
+                                                                                                                      'Week 15',
+                                                                                                                      'Week 16',
+                                                                                                                      'Week 17',
+                                                                                                                      'Wildcard',
+                                                                                                                      'Divisional',
+                                                                                                                      'Conference',
+                                                                                ],
                         title: {
                             text: 'Week — drag to zoom'
                         }
@@ -400,14 +401,14 @@
                         valueSuffix: ' TDs'
                     },
                     plotOptions: {
-                                                column: {
+                        column: {
                             dataLabels: {
                                 enabled: true
                             }
                         }
                     },
                     series: [
-                                              {
+                        {
                             name: 'Marino TDs',
                             marker: {
                                 symbol: 'circle'
@@ -425,11 +426,11 @@
                                 }
                             ]
                         }
-                                          ]
+                    ]
                 });
             </script>
         </div>
-    </div>
+            </div>
 </div>
 
 <div class="py-10 bg-gray-200" id="player">
@@ -472,7 +473,7 @@
                         name: 'Players',
                         colorByPoint: true,
                         data: [
-                          {name: "Mark Clayton",y: 82,},{name: "Mark Duper",y: 60,},{name: "Nat Moore",y: 26,},{name: "O.J. McDuffie",y: 26,},{name: "Jim Jensen",y: 19,},{name: "Keith Jackson",y: 19,},{name: "Dan Johnson",y: 17,},{name: "Bruce Hardy",y: 17,},{name: "Irving Fryar",y: 16,},{name: "Tony Martin",y: 11,},{name: "Oronde Gadsden",y: 11,},                            {
+                          {name: "Mark Clayton",y: 82,},{name: "Mark Duper",y: 60,},{name: "Nat Moore",y: 26,},{name: "O.J. McDuffie",y: 26,},{name: "Jim Jensen",y: 19,},{name: "Keith Jackson",y: 19,},{name: "Dan Johnson",y: 17,},{name: "Bruce Hardy",y: 17,},{name: "Irving Fryar",y: 16,},{name: "Tony Martin",y: 11,},{name: "Oronde Gadsden",y: 11,},                                                      {
                                 name: "0 Players with 10 TDs",
                                 y: 0,
                             },
@@ -512,13 +513,14 @@
                                 name: "15 Players with 1 TD",
                                 y: 15,
                             },
-                        ]
+                                                  ]
                     }]
                 });
             </script>
         </div>
     </div>
 </div>
+
 
 <div class="py-10" id="distance">
     <h1 class="font-light text-3xl text-center">TDs by Distance</h1>
@@ -530,7 +532,7 @@
             That's more passing yards than Shaun Hill            (8,295) threw in his
             entire career.
         </p>
-        <div class="w-screen">
+                <div class="w-screen">
 
             <div id="td-by-dist"></div>
             <script>
@@ -547,8 +549,8 @@
                     legend: {
                         enabled: false
                     },
-                                                                colors: ['#005F61', '#FA4616'],
-                                                            title: {
+                                      colors: ['#005F61', '#FA4616'],
+                                      title: {
                         text: ''
                     },
                     xAxis: {
@@ -783,7 +785,7 @@
                 });
             </script>
         </div>
-    </div>
+            </div>
 </div>
 </body>
 </html>

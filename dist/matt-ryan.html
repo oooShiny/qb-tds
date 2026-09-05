@@ -7,6 +7,7 @@
     <link rel="icon" href="/icon.ico" sizes="any"><!-- 32×32 -->
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-icon.png"><!-- 180×180 -->
+    <script defer data-site="qbtds.com" src="https://stats.br0wn.net/js/script.js"></script>
     <!-- Tailwind CSS and Alpine JS -->
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
           rel="stylesheet">
@@ -60,7 +61,7 @@
     </style>
 </head>
 <body>
-<div class="bg-gray-500 fixed p-2 shadow-lg text-white w-screen">
+<div class="bg-gray-500 fixed p-2 shadow-lg text-white w-screen z-50">
     <ul class="flex flex-wrap justify-around">
                       <li class="hover:text-blue-300 hover:underline"><a
                       href="tom-brady.html">Brady</a>
@@ -123,7 +124,7 @@
     </nav>
 
     <div class="py-10 flex flex-wrap p-10">
-        <p>Matt Ryan has thrown 390            touchdown passes in his NFL career. Below you will find every single
+        <p>Matt Ryan has thrown 401            touchdown passes in his NFL career. Below you will find every single
             one
             of them, organized in different ways.</p>
     </div>
@@ -627,6 +628,17 @@
                     // },
                     data: [{x:3449, y:1, custom: {q: "1st quarter", time:"12:29", title:"1 TD pass to Jelani Woods vs KAN (2022)"}},
 {x:29, y:12, custom: {q: "4th quarter", time:"0:29", title:"12 TD pass to Jelani Woods vs KAN (2022)"}},
+{x:23, y:32, custom: {q: "4th quarter", time:"0:23", title:"32 TD pass to Alec Pierce vs JAX (2022)"}},
+{x:772, y:10, custom: {q: "4th quarter", time:"12:52", title:"10 TD pass to Jelani Woods vs JAX (2022)"}},
+{x:1932, y:4, custom: {q: "2nd quarter", time:"2:12", title:"4 TD pass to Parris Campbell vs JAX (2022)"}},
+{x:1152, y:4, custom: {q: "3rd quarter", time:"4:12", title:"4 TD pass to Parris Campbell vs TEN (2022)"}},
+{x:314, y:35, custom: {q: "4th quarter", time:"5:14", title:"35 TD pass to Parris Campbell vs LVR (2022)"}},
+{x:920, y:6, custom: {q: "3rd quarter", time:"0:20", title:"6 TD pass to Michael Pittman vs PIT (2022)"}},
+{x:1129, y:15, custom: {q: "3rd quarter", time:"3:49", title:"15 TD pass to Alec Pierce vs DAL (2022)"}},
+{x:2862, y:14, custom: {q: "1st quarter", time:"2:42", title:"14 TD pass to Ashton Dulin vs DAL (2022)"}},
+{x:2935, y:1, custom: {q: "1st quarter", time:"3:55", title:"1 TD pass to Deon Jackson vs MIN (2022)"}},
+{x:1351, y:7, custom: {q: "3rd quarter", time:"7:31", title:"7 TD pass to Mo Alie-Cox vs TEN (2022)"}},
+{x:1940, y:14, custom: {q: "2nd quarter", time:"2:20", title:"14 TD pass to Mo Alie-Cox vs TEN (2022)"}},
 ]
                 },
                                         ]
@@ -663,28 +675,28 @@
                                                       'Cardinals',
                                                       'Vikings',
                                                       '49ers',
+                                                      'Cowboys',
                                                       'Lions',
                                                       'Commanders',
-                                                      'Cowboys',
                                                       'Giants',
                                                       'Rams',
                                                       'Colts',
-                                                      'Chiefs',
                                                       'Raiders',
+                                                      'Chiefs',
+                                                      'Jaguars',
                                                       'Chargers',
                                                       'Dolphins',
                                                       'Jets',
                                                       'Bengals',
                                                       'Bears',
-                                                      'Jaguars',
                                                       'Broncos',
                                                       'Texans',
                                                       'Bills',
                                                       'Browns',
                                                       'Ravens',
                                                       'Patriots',
-                                                      'Steelers',
                                                       'Titans',
+                                                      'Steelers',
                                                   ],
                         title: {
                             text: 'Opponent — drag to zoom'
@@ -708,7 +720,7 @@
                         }
                     },
                     series: [
-                                              {
+                                                                    {
                             name: 'Ryan TDs',
                             data: [
                                                             47,
@@ -720,28 +732,28 @@
                                                             16,
                                                             14,
                                                             14,
-                                                            12,
-                                                            12,
                                                             11,
+                                                            12,
+                                                            12,
                                                             10,
                                                             9,
                                                             9,
-                                                            7,
                                                             8,
                                                             7,
+                                                            6,
+                                                            7,
                                                             7,
                                                             7,
                                                             7,
                                                             6,
                                                             6,
-                                                            6,
                                                             5,
                                                             5,
                                                             5,
                                                             5,
                                                             5,
-                                                            3,
                                                             2,
+                                                            3,
                                                           ]
                         },
                                               {
@@ -754,17 +766,17 @@
                                                             0,
                                                             0,
                                                             0,
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            0,
+                                                            1,
                                                             0,
                                                             2,
                                                             0,
                                                             0,
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            1,
+                                                            2,
+                                                            3,
                                                             0,
                                                             0,
                                                             0,
@@ -776,11 +788,11 @@
                                                             0,
                                                             0,
                                                             0,
-                                                            0,
-                                                            0,
+                                                            3,
+                                                            1,
                                                           ]
                         },
-                                          ]
+                                                                ]
                 });
             </script>
         </div>
@@ -830,12 +842,12 @@
                             title: 'Ryan TDs',
                             plotLines: [{
                                 color: 'gray',
-                                value: 26,
+                                value: 27,
                                 width: '1',
                                 zIndex: 4,
                                 dashStyle: 'Dot',
                                 label: {
-                                    text: 'Average: 26',
+                                    text: 'Average: 27',
                                     align: 'left',
                                 }
                             }]
@@ -857,7 +869,7 @@
                                     symbol: 'circle'
                                 },
                                 data: [
-                                  18,22,29,29,38,26,28,21,47,22,35,26,26,20,3,                                ],
+                                  18,22,29,29,38,26,28,21,47,22,35,26,26,20,14,                                ],
                                 zoneAxis: 'x',
                                                               zones: [
                                     {
@@ -882,9 +894,9 @@
       <div class="flex flex-wrap p-10">
                 <p class="pb-10">
             Matt Ryan has thrown 20              playoff TDs which is
-              about 5.1              % of his total TDs.
+              about 5.0              % of his total TDs.
           </p>
-              <div class="w-screen">
+                      <div class="w-screen">
 
             <div id="td-by-week"></div>
             <script>
@@ -901,29 +913,29 @@
                     },
                     xAxis: {
                         categories: [
-                                                                                                                              'Week 1',
-                                                                                                                                      'Week 2',
-                                                                                                                                      'Week 3',
-                                                                                                                                      'Week 4',
-                                                                                                                                      'Week 5',
-                                                                                                                                      'Week 6',
-                                                                                                                                      'Week 7',
-                                                                                                                                      'Week 8',
-                                                                                                                                      'Week 9',
-                                                                                                                                      'Week 10',
-                                                                                                                                      'Week 11',
-                                                                                                                                      'Week 12',
-                                                                                                                                      'Week 13',
-                                                                                                                                      'Week 14',
-                                                                                                                                      'Week 15',
-                                                                                                                                      'Week 16',
-                                                                                                                                      'Week 17',
-                                                                                                                                      'Week 18',
-                                                                                                                                      'Wildcard',
-                                                                                                                                      'Divisional',
-                                                                                                                                      'Conference',
-                                                                                                                                      'Super Bowl',
-                                                                                                                  ],
+                                                                                        'Week 1',
+                                                                                                                      'Week 2',
+                                                                                                                      'Week 3',
+                                                                                                                      'Week 4',
+                                                                                                                      'Week 5',
+                                                                                                                      'Week 6',
+                                                                                                                      'Week 7',
+                                                                                                                      'Week 8',
+                                                                                                                      'Week 9',
+                                                                                                                      'Week 10',
+                                                                                                                      'Week 11',
+                                                                                                                      'Week 12',
+                                                                                                                      'Week 13',
+                                                                                                                      'Week 14',
+                                                                                                                      'Week 15',
+                                                                                                                      'Week 16',
+                                                                                                                      'Week 17',
+                                                                                                                      'Week 18',
+                                                                                                                      'Wildcard',
+                                                                                                                      'Divisional',
+                                                                                                                      'Conference',
+                                                                                                                      'Super Bowl',
+                                                                                ],
                         title: {
                             text: 'Week — drag to zoom'
                         }
@@ -946,20 +958,20 @@
                         valueSuffix: ' TDs'
                     },
                     plotOptions: {
-                                                column: {
+                        column: {
                             dataLabels: {
                                 enabled: true
                             }
                         }
                     },
                     series: [
-                                              {
+                        {
                             name: 'Ryan TDs',
                             marker: {
                                 symbol: 'circle'
                             },
                             data: [
-                              21,31,31,23,18,25,17,17,24,20,15,16,15,25,25,24,22,1,3,8,7,2,                            ],
+                              21,31,31,25,18,28,18,17,24,21,15,17,17,25,26,24,22,1,3,8,7,2,                            ],
                             zoneAxis: 'x',
                             zones: [
                                 {
@@ -971,11 +983,11 @@
                                 }
                             ]
                         }
-                                          ]
+                    ]
                 });
             </script>
         </div>
-    </div>
+            </div>
 </div>
 
 <div class="py-10 bg-gray-200" id="player">
@@ -984,7 +996,7 @@
                     <p class="pb-10">
           Matt Ryan has connected
             with Julio Jones            for 65            touchdowns.
-            He's also thrown TDs to 53            other players.
+            He's also thrown TDs to 58            other players.
         </p>
                 <div class="w-screen">
 
@@ -1018,7 +1030,7 @@
                         name: 'Players',
                         colorByPoint: true,
                         data: [
-                          {name: "Julio Jones",y: 65,},{name: "Roddy White",y: 55,},{name: "Tony Gonzalez*",y: 37,},{name: "Calvin Ridley",y: 26,},{name: "Mohamed Sanu",y: 16,},{name: "Austin Hooper",y: 15,},{name: "Devonta Freeman",y: 13,},{name: "Tevin Coleman",y: 13,},                            {
+                          {name: "Julio Jones",y: 65,},{name: "Roddy White",y: 55,},{name: "Tony Gonzalez*",y: 37,},{name: "Calvin Ridley",y: 26,},{name: "Mohamed Sanu",y: 16,},{name: "Austin Hooper",y: 15,},{name: "Devonta Freeman",y: 13,},{name: "Tevin Coleman",y: 13,},                                                      {
                                 name: "1 Players with 10 TDs",
                                 y: 5,
                             },
@@ -1047,18 +1059,18 @@
                                 y: 20,
                             },
                             {
-                                name: "4 Players with 3 TDs",
-                                y: 12,
+                                name: "6 Players with 3 TDs",
+                                y: 18,
                             },
                             {
-                                name: "8 Players with 2 TDs",
-                                y: 16,
+                                name: "10 Players with 2 TDs",
+                                y: 20,
                             },
                             {
-                                name: "17 Players with 1 TD",
-                                y: 17,
+                                name: "18 Players with 1 TD",
+                                y: 18,
                             },
-                        ]
+                                                  ]
                     }]
                 });
             </script>
@@ -1066,17 +1078,18 @@
     </div>
 </div>
 
+
 <div class="py-10" id="distance">
     <h1 class="font-light text-3xl text-center">TDs by Distance</h1>
       <div class="flex flex-wrap p-10">
         <p class="pb-10">
                       If you only count yards gained on passes that went for
             TDs, Matt Ryan has
-            accumulated 6,744 yards.
+            accumulated 6,886 yards.
             That's more passing yards than Christian Ponder            (6,658) threw in his
             entire career.
         </p>
-        <div class="w-screen">
+                <div class="w-screen">
 
             <div id="td-by-dist"></div>
             <script>
@@ -1093,8 +1106,8 @@
                     legend: {
                         enabled: false
                     },
-                                                                colors: ['#A71930', '#002C5F'],
-                                                            title: {
+                                      colors: ['#A71930', '#002C5F'],
+                                      title: {
                         text: ''
                     },
                     xAxis: {
@@ -1328,22 +1341,21 @@
                                               {
                             name: 'Ryan TDs (Colts)',
                             data: [
+                                                            2,
+                                                            0,
+                                                            0,
+                                                            2,
+                                                            0,
                                                             1,
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            0,
                                                             1,
                                                             0,
                                                             0,
                                                             1,
                                                             0,
+                                                            1,
+                                                            0,
+                                                            2,
+                                                            2,
                                                             0,
                                                             0,
                                                             0,
@@ -1360,9 +1372,10 @@
                                                             0,
                                                             0,
                                                             0,
+                                                            1,
                                                             0,
                                                             0,
-                                                            0,
+                                                            1,
                                                             0,
                                                             0,
                                                             0,
@@ -1433,7 +1446,7 @@
                 });
             </script>
         </div>
-    </div>
+            </div>
 </div>
 </body>
 </html>

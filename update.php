@@ -242,7 +242,7 @@ function team_name_to_abbr(string $name, int $year): string {
         'Seahawks'     => 'SEA', '49ers'      => 'SFO', 'Buccaneers' => 'TAM',
         'Titans'       => 'TEN', 'Commanders' => 'WAS',
         // Legacy names
-        'Redskins'     => 'WAS', 'Football Team' => 'WAS',
+        'Redskins'     => 'WAS', 'Football Team' => 'WAS', 'Washington' => 'WAS',
         'Oilers'       => 'OTI',
     ];
 

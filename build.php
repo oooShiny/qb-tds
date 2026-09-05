@@ -30,6 +30,8 @@ foreach (scandir(__DIR__ . '/json') as $file) {
 function rewrite_links(string $html): string {
     // ?qb=slug  →  slug.html  (index.php nav links)
     $html = preg_replace('/href="(\?qb=([^"]+))"/', 'href="$2.html"', $html);
+    // '?qb=slug' in JS strings (urlMap) → 'slug.html'
+    $html = preg_replace("/'(\\?qb=([^']+))'/", "'$2.html'", $html);
     // search.php?qb=  →  search.html?qb=
     $html = str_replace('href="/search.php?qb=', 'href="/search.html?qb=', $html);
     $html = str_replace("href='/search.php?qb=", "href='/search.html?qb=", $html);
