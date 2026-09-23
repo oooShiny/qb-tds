@@ -120,6 +120,10 @@ foreach ($assets as $asset) {
     }
 }
 
+// Hand-maintained files that aren't generated (CNAME, standalone pages)
+echo "Copying static/\n";
+copy_dir(__DIR__ . '/static', $dist);
+
 // JSON data files (required by search.html at runtime)
 echo "Copying json/\n";
 copy_dir(__DIR__ . '/json', $dist . '/json');

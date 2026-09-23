@@ -1,0 +1,9 @@
+# Added by saggar — local files that shouldn't be committed
+.saggar/**/*.local.*
+.saggar/scratchpad.md
+.saggar/jobs/
+
+# Built by build.php (deployed via GitHub Actions)
+dist/
+
+.DS_Store
