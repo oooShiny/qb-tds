@@ -169,7 +169,14 @@ foreach ($files as $file) {
                   '<?php print addslashes($qb_display_names[$qb]); ?>',
                   <?php endforeach; ?>
                 ],
-                title: { text: null }
+                title: { text: null },
+                labels: {
+                    formatter: function() {
+                        // Leading slash: Highcharts strips bare relative hrefs as unsafe
+                        return '<a href="/' + urlMap[this.value] + '">' + this.value + '</a>';
+                    },
+                    style: { cursor: 'pointer', textDecoration: 'underline' }
+                }
             },
             yAxis: {
                 min: 0,
@@ -655,7 +662,7 @@ foreach ($tds as $team => $team_tds) {
 <?php endif; ?>
 
 <div class="py-10" id="week">
-    <h1 class="font-light text-3xl text-center">TDs by Week</h1>
+    <h1 class="font-light text-3xl text-center"><?php print $qb_path ? 'TDs by Week' : 'TDs by Career Year'; ?></h1>
   <?php
   $tds_by_week = [];
 
@@ -1052,6 +1059,28 @@ foreach ($count as $qb => $_) {
         <div class="w-screen">
             <div id="td-reg-playoff"></div>
             <script>
+                // [name, regular season TDs, playoff TDs] per QB
+                var regPlayoffRows = [
+                  <?php foreach ($reg_vs_playoff as $qb => $counts): ?>
+                  ['<?php print addslashes($qb_display_names[$qb]); ?>', <?php print $counts[0]; ?>, <?php print $counts[1]; ?>],
+                  <?php endforeach; ?>
+                ];
+
+                // Re-sort bars by the total of whichever series are visible
+                function sortRegPlayoff(chart) {
+                    var visible = chart.series.filter(function(s) { return s.visible; });
+                    if (!visible.length) return;
+                    var total = function(row) {
+                        return visible.reduce(function(sum, s) { return sum + row[s.index + 1]; }, 0);
+                    };
+                    var rows = regPlayoffRows.slice().sort(function(a, b) { return total(b) - total(a); });
+                    chart.xAxis[0].setCategories(rows.map(function(r) { return r[0]; }), false);
+                    chart.series.forEach(function(s) {
+                        s.setData(rows.map(function(r) { return r[s.index + 1]; }), false);
+                    });
+                    chart.redraw();
+                }
+
                 Highcharts.chart('td-reg-playoff', {
                     chart: { type: 'bar' },
                     title: { text: 'Regular Season vs. Playoff TDs' },
@@ -1069,7 +1098,14 @@ foreach ($count as $qb => $_) {
                     },
                     tooltip: { valueSuffix: ' TDs' },
                     plotOptions: {
-                        bar: { dataLabels: { enabled: true } }
+                        bar: { dataLabels: { enabled: true } },
+                        series: {
+                            events: {
+                                // Defer until Highcharts finishes its own show/hide redraw
+                                show: function() { setTimeout(sortRegPlayoff, 0, this.chart); },
+                                hide: function() { setTimeout(sortRegPlayoff, 0, this.chart); }
+                            }
+                        }
                     },
                     legend: { reversed: true },
                     series: [{
