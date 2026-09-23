@@ -1075,7 +1075,10 @@ foreach ($count as $qb => $_) {
                     };
                     var rows = regPlayoffRows.slice().sort(function(a, b) { return total(b) - total(a); });
                     chart.xAxis[0].setCategories(rows.map(function(r) { return r[0]; }), false);
-                    chart.series.forEach(function(s) {
+                    // Only reorder visible series: setData on a hidden series drops its
+                    // bars, and they aren't redrawn when it's shown again. A hidden
+                    // series gets reordered here once its show event fires.
+                    visible.forEach(function(s) {
                         s.setData(rows.map(function(r) { return r[s.index + 1]; }), false);
                     });
                     chart.redraw();
