@@ -8034,5 +8034,47 @@
         "down": "3",
         "distance": "3",
         "id": 577
+    },
+    {
+        "season": "2026",
+        "week": "3",
+        "team": "PIT",
+        "opponent": "CIN",
+        "quarter": "1",
+        "yards_gained": "38",
+        "players_involved": "Roman Wilson",
+        "minutes": 13,
+        "seconds": 17,
+        "down": "3",
+        "distance": "5",
+        "id": 578
+    },
+    {
+        "season": "2026",
+        "week": "3",
+        "team": "PIT",
+        "opponent": "CIN",
+        "quarter": "1",
+        "yards_gained": "23",
+        "players_involved": "Ben Skowronek",
+        "minutes": 0,
+        "seconds": 57,
+        "down": "1",
+        "distance": "10",
+        "id": 579
+    },
+    {
+        "season": "2026",
+        "week": "3",
+        "team": "PIT",
+        "opponent": "CIN",
+        "quarter": "3",
+        "yards_gained": "6",
+        "players_involved": "DK Metcalf",
+        "minutes": 2,
+        "seconds": 48,
+        "down": "3",
+        "distance": "2",
+        "id": 580
     }
 ]

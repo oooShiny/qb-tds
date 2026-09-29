@@ -6312,5 +6312,33 @@
         "down": "2",
         "distance": "5",
         "id": 451
+    },
+    {
+        "season": "2026",
+        "week": "3",
+        "team": "LAR",
+        "opponent": "DEN",
+        "quarter": "1",
+        "yards_gained": "5",
+        "players_involved": "Tyler Higbee",
+        "minutes": 5,
+        "seconds": 0,
+        "down": "2",
+        "distance": "5",
+        "id": 452
+    },
+    {
+        "season": "2026",
+        "week": "3",
+        "team": "LAR",
+        "opponent": "DEN",
+        "quarter": "4",
+        "yards_gained": "48",
+        "players_involved": "Konata Mumpfield",
+        "minutes": 3,
+        "seconds": 46,
+        "down": "2",
+        "distance": "1",
+        "id": 453
     }
 ]
