@@ -6340,5 +6340,47 @@
         "down": "2",
         "distance": "1",
         "id": 453
+    },
+    {
+        "season": "2026",
+        "week": "5",
+        "team": "LAR",
+        "opponent": "BUF",
+        "quarter": "2",
+        "yards_gained": "4",
+        "players_involved": "Davante Adams",
+        "minutes": 8,
+        "seconds": 4,
+        "down": "1",
+        "distance": "4",
+        "id": 454
+    },
+    {
+        "season": "2026",
+        "week": "5",
+        "team": "LAR",
+        "opponent": "BUF",
+        "quarter": "4",
+        "yards_gained": "2",
+        "players_involved": "Puka Nacua",
+        "minutes": 14,
+        "seconds": 20,
+        "down": "2",
+        "distance": "2",
+        "id": 455
+    },
+    {
+        "season": "2026",
+        "week": "5",
+        "team": "LAR",
+        "opponent": "BUF",
+        "quarter": "4",
+        "yards_gained": "5",
+        "players_involved": "Davante Adams",
+        "minutes": 7,
+        "seconds": 18,
+        "down": "3",
+        "distance": "5",
+        "id": 456
     }
 ]

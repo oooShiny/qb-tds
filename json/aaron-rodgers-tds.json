@@ -8118,5 +8118,47 @@
         "down": "1",
         "distance": "3",
         "id": 583
+    },
+    {
+        "season": "2026",
+        "week": "5",
+        "team": "PIT",
+        "opponent": "IND",
+        "quarter": "1",
+        "yards_gained": "80",
+        "players_involved": "Jaylen Warren",
+        "minutes": 8,
+        "seconds": 57,
+        "down": "1",
+        "distance": "10",
+        "id": 584
+    },
+    {
+        "season": "2026",
+        "week": "5",
+        "team": "PIT",
+        "opponent": "IND",
+        "quarter": "2",
+        "yards_gained": "1",
+        "players_involved": "Pat Freiermuth",
+        "minutes": 13,
+        "seconds": 20,
+        "down": "1",
+        "distance": "1",
+        "id": 585
+    },
+    {
+        "season": "2026",
+        "week": "5",
+        "team": "PIT",
+        "opponent": "IND",
+        "quarter": "4",
+        "yards_gained": "17",
+        "players_involved": "Pat Freiermuth",
+        "minutes": 6,
+        "seconds": 40,
+        "down": "3",
+        "distance": "6",
+        "id": 586
     }
 ]
