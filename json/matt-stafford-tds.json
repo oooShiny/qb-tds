@@ -6382,5 +6382,33 @@
         "down": "3",
         "distance": "5",
         "id": 456
+    },
+    {
+        "season": "2026",
+        "week": "6",
+        "team": "LAR",
+        "opponent": "ARI",
+        "quarter": "2",
+        "yards_gained": "15",
+        "players_involved": "Blake Corum",
+        "minutes": 8,
+        "seconds": 29,
+        "down": "2",
+        "distance": "9",
+        "id": 457
+    },
+    {
+        "season": "2026",
+        "week": "6",
+        "team": "LAR",
+        "opponent": "ARI",
+        "quarter": "4",
+        "yards_gained": "6",
+        "players_involved": "Colby Parkinson",
+        "minutes": 0,
+        "seconds": 52,
+        "down": "2",
+        "distance": "3",
+        "id": 458
     }
 ]

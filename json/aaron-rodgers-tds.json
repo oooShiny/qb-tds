@@ -8160,5 +8160,33 @@
         "down": "3",
         "distance": "6",
         "id": 586
+    },
+    {
+        "season": "2026",
+        "week": "6",
+        "team": "PIT",
+        "opponent": "TAM",
+        "quarter": "4",
+        "yards_gained": "5",
+        "players_involved": "Darnell Washington",
+        "minutes": 13,
+        "seconds": 53,
+        "down": "2",
+        "distance": "1",
+        "id": 587
+    },
+    {
+        "season": "2026",
+        "week": "6",
+        "team": "PIT",
+        "opponent": "TAM",
+        "quarter": "OT",
+        "yards_gained": "6",
+        "players_involved": "Germie Bernard",
+        "minutes": 3,
+        "seconds": 20,
+        "down": "2",
+        "distance": "6",
+        "id": 588
     }
 ]
