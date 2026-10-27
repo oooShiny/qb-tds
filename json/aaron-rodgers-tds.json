@@ -8188,5 +8188,19 @@
         "down": "2",
         "distance": "6",
         "id": 588
+    },
+    {
+        "season": "2026",
+        "week": "7",
+        "team": "PIT",
+        "opponent": "NOR",
+        "quarter": "2",
+        "yards_gained": "4",
+        "players_involved": "Darnell Washington",
+        "minutes": 6,
+        "seconds": 51,
+        "down": "2",
+        "distance": "4",
+        "id": 589
     }
 ]

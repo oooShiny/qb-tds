@@ -6410,5 +6410,47 @@
         "down": "2",
         "distance": "3",
         "id": 458
+    },
+    {
+        "season": "2026",
+        "week": "7",
+        "team": "LAR",
+        "opponent": "LVR",
+        "quarter": "1",
+        "yards_gained": "3",
+        "players_involved": "Davis Allen",
+        "minutes": 6,
+        "seconds": 28,
+        "down": "2",
+        "distance": "3",
+        "id": 459
+    },
+    {
+        "season": "2026",
+        "week": "7",
+        "team": "LAR",
+        "opponent": "LVR",
+        "quarter": "2",
+        "yards_gained": "5",
+        "players_involved": "Davis Allen",
+        "minutes": 10,
+        "seconds": 5,
+        "down": "1",
+        "distance": "5",
+        "id": 460
+    },
+    {
+        "season": "2026",
+        "week": "7",
+        "team": "LAR",
+        "opponent": "LVR",
+        "quarter": "2",
+        "yards_gained": "11",
+        "players_involved": "Puka Nacua",
+        "minutes": 4,
+        "seconds": 20,
+        "down": "2",
+        "distance": "8",
+        "id": 461
     }
 ]
