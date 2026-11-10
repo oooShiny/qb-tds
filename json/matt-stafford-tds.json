@@ -6466,5 +6466,19 @@
         "down": "2",
         "distance": "6",
         "id": 462
+    },
+    {
+        "season": "2026",
+        "week": "9",
+        "team": "LAR",
+        "opponent": "WAS",
+        "quarter": "4",
+        "yards_gained": "7",
+        "players_involved": "Puka Nacua",
+        "minutes": 12,
+        "seconds": 57,
+        "down": "2",
+        "distance": "7",
+        "id": 463
     }
 ]
