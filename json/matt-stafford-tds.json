@@ -6480,5 +6480,47 @@
         "down": "2",
         "distance": "7",
         "id": 463
+    },
+    {
+        "season": "2026",
+        "week": "10",
+        "team": "LAR",
+        "opponent": "ARI",
+        "quarter": "2",
+        "yards_gained": "5",
+        "players_involved": "Tyler Higbee",
+        "minutes": 1,
+        "seconds": 9,
+        "down": "3",
+        "distance": "5",
+        "id": 464
+    },
+    {
+        "season": "2026",
+        "week": "10",
+        "team": "LAR",
+        "opponent": "ARI",
+        "quarter": "2",
+        "yards_gained": "22",
+        "players_involved": "Xavier Smith",
+        "minutes": 0,
+        "seconds": 20,
+        "down": "1",
+        "distance": "10",
+        "id": 465
+    },
+    {
+        "season": "2026",
+        "week": "10",
+        "team": "LAR",
+        "opponent": "ARI",
+        "quarter": "3",
+        "yards_gained": "19",
+        "players_involved": "Davis Allen",
+        "minutes": 6,
+        "seconds": 3,
+        "down": "1",
+        "distance": "10",
+        "id": 466
     }
 ]

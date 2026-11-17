@@ -8202,5 +8202,33 @@
         "down": "2",
         "distance": "4",
         "id": 589
+    },
+    {
+        "season": "2026",
+        "week": "10",
+        "team": "PIT",
+        "opponent": "CIN",
+        "quarter": "4",
+        "yards_gained": "22",
+        "players_involved": "DK Metcalf",
+        "minutes": 12,
+        "seconds": 23,
+        "down": "4",
+        "distance": "4",
+        "id": 590
+    },
+    {
+        "season": "2026",
+        "week": "10",
+        "team": "PIT",
+        "opponent": "CIN",
+        "quarter": "4",
+        "yards_gained": "27",
+        "players_involved": "Pat Freiermuth",
+        "minutes": 7,
+        "seconds": 27,
+        "down": "3",
+        "distance": "8",
+        "id": 591
     }
 ]
